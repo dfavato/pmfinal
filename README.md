@@ -4,7 +4,7 @@
 ###Baixar
 - Para windows:
  - https://git-scm.com/download/win
-- Linux já vem instalado
+- Linux já vem instalado na maioria das distribuições
 
 ###Workflow
 1. Copie este repositório com o comando: `git clone https://github.com/dfavato/pmfinal.git`
