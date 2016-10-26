@@ -21,3 +21,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//adicionando biblioteca de gráficos
+//link : https://github.com/PhilJay/MPAndroidChart
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
