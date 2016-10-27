@@ -12,6 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +50,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setChart();
+        setAccountList();
     }
 
     @Override
@@ -97,5 +110,46 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //
+    public void setChart(){
+        //Preenchendo o gráfico com dados do mês e escondendo placeholde
+        //localizando view que contém o gráfico
+        PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
+        //criando array que conterá informações do gráfico
+        List<PieEntry> entries = new ArrayList<>();
+        //futuramente estes dados vão ser buscados do banco de dados:
+        entries.add(new PieEntry(18.5f, "Comida"));
+        entries.add(new PieEntry(26.7f, "Transporte"));
+        entries.add(new PieEntry(24.0f, "Xerox"));
+        entries.add(new PieEntry(30.8f, "Pao de batata"));
+        //
+        if(entries.size()!=0){
+            findViewById(R.id.chart_placeholder).setVisibility(View.GONE);
+            pieChart.setVisibility(View.VISIBLE);
+            //
+            PieDataSet set = new PieDataSet(entries, "Gastos do mês");
+            set.setColors(ColorTemplate.VORDIPLOM_COLORS);
+            PieData data = new PieData(set);
+            pieChart.setData(data);
+            pieChart.invalidate(); // refresh
+        }
+    }
+    public void setAccountList(){
+        //array que contem os dados das contas
+        final ArrayList<AccountItem> accounts = new ArrayList<>();
+        //elementos futuramente serão adicionados dinamicamente
+        accounts.add(new AccountItem("Titulo",0.0));
+        accounts.add(new AccountItem("Titulo",0.0));
+        accounts.add(new AccountItem("Titulo",0.0));
+        accounts.add(new AccountItem("Titulo",0.0));
+        accounts.add(new AccountItem("Titulo",0.0));
+        accounts.add(new AccountItem("Titulo",0.0));
+        //adaptados do array de contas para a ListView
+        AccountItemAdapter accountAdapter = new AccountItemAdapter(this,accounts);
+        ListView accountList = (ListView)findViewById(R.id.account_list);
+        accountList.setAdapter(accountAdapter);
+
     }
 }
