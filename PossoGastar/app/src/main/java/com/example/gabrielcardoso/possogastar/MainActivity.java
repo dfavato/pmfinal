@@ -1,5 +1,6 @@
 package com.example.gabrielcardoso.possogastar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -87,24 +89,20 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.transfer_money) {
+            Intent newWindow = new Intent(MainActivity.this, TransferMoney.class);
+            startActivity(newWindow);
+        } else if (id == R.id.bank_statement) {
+            Intent newWindow = new Intent(MainActivity.this, BankStatement.class);
+            startActivity(newWindow);
+        } else if (id == R.id.manage_accounts) {
+            Intent newWindow = new Intent(MainActivity.this, ManageAccounts.class);
+            startActivity(newWindow);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -114,7 +112,7 @@ public class MainActivity extends AppCompatActivity
 
     //
     public void setChart(){
-        //Preenchendo o gráfico com dados do mês e escondendo placeholde
+        //Preenchendo o gráfico com dados do mês e escondendo placeholders
         //localizando view que contém o gráfico
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         //criando array que conterá informações do gráfico
@@ -140,12 +138,12 @@ public class MainActivity extends AppCompatActivity
         //array que contem os dados das contas
         final ArrayList<AccountItem> accounts = new ArrayList<>();
         //elementos futuramente serão adicionados dinamicamente
-        accounts.add(new AccountItem("Titulo",0.0));
-        accounts.add(new AccountItem("Titulo",0.0));
-        accounts.add(new AccountItem("Titulo",0.0));
-        accounts.add(new AccountItem("Titulo",0.0));
-        accounts.add(new AccountItem("Titulo",0.0));
-        accounts.add(new AccountItem("Titulo",0.0));
+        accounts.add(new AccountItem("Titulo",-25.0,new Date()));
+        accounts.add(new AccountItem("Titulo",25.5,new Date()));
+        accounts.add(new AccountItem("Titulo",75.0,new Date()));
+        //criando uma conta a mais que serve para scroolar o ultimo elemento, que pode vir a ficar
+        //escondido sobre o botao flutuando
+        accounts.add(new AccountItem("",00.0,new Date(),View.INVISIBLE));
         //adaptados do array de contas para a ListView
         AccountItemAdapter accountAdapter = new AccountItemAdapter(this,accounts);
         ListView accountList = (ListView)findViewById(R.id.account_list);
