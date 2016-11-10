@@ -14,7 +14,6 @@ public class AccountItem {
         public double getmAmount(){
              return this.mAmount;
         }
-
         AccountItem(String title, double amount){
             this.mTitle = title;
             this.mAmount = amount;

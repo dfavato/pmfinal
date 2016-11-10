@@ -9,7 +9,8 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
 /**
- * Created by Gabriel Cardoso on 26/10/2016.
+ * Created by Gabriel ==
+ * Cardoso on 26/10/2016.
  */
 
 public class AccountItemAdapter extends ArrayAdapter {
