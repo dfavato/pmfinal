@@ -22,16 +22,7 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:visibility="gone"/>
-    //A seguinte view é o placeholder que é exibido caso ainda não existam gastos no mês atual
-    <TextView
-        android:id="@+id/chart_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ainda não ha dados disponíveis para este mês"
-        android:gravity="center"
-        android:padding="16dp"/>
+        android:layout_height="250dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

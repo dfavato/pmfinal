@@ -34,7 +34,7 @@ public class AccountItemAdapter extends ArrayAdapter {
         //alterar valores do item
         //
         //se for o ultimo item, ele deve ficar invisivel. Serve pra poder scrollar o ultimo item da lista
-        //pra cima do botao flutuante, q de outra maneira o esconderia. (eé um item em branco adicionado para este fim)
+        //pra cima do botao flutuante, q de outra maneira o esconderia. (é um item em branco adicionado para este fim)
         if(item.getmVisibility()==View.INVISIBLE)
             listItemView.setVisibility(View.INVISIBLE);
         else

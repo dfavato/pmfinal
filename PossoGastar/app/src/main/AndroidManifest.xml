@@ -18,9 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransferMoney" />
         <activity android:name=".ManageAccounts" />
-        <activity android:name=".BankStatement"></activity>
+        <activity android:name=".BankStatement" />
+        <activity android:name=".TransferMoney" />
+        <activity android:name=".AccountItemDetailed"></activity>
     </application>
 
 </manifest>

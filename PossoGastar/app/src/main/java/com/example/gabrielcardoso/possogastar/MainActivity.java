@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -123,19 +124,26 @@ public class MainActivity extends AppCompatActivity
         entries.add(new PieEntry(24.0f, "Xerox"));
         entries.add(new PieEntry(30.8f, "Pao de batata"));
         //
-        if(entries.size()!=0){
-            findViewById(R.id.chart_placeholder).setVisibility(View.GONE);
-            pieChart.setVisibility(View.VISIBLE);
-            //
-            PieDataSet set = new PieDataSet(entries, "Gastos do mês");
-            set.setColors(ColorTemplate.VORDIPLOM_COLORS);
-            PieData data = new PieData(set);
-            pieChart.setData(data);
-            pieChart.invalidate(); // refresh
-        }
+        configChart(pieChart);
+        PieDataSet set = new PieDataSet(entries, "Gastos do mês");
+        set.setColors(ColorTemplate.MATERIAL_COLORS
+
+        );
+        PieData data = new PieData(set);
+        pieChart.setData(data);
+        pieChart.invalidate(); // refresh
+    }
+    //
+    public void configChart(PieChart piechart){
+        piechart.setNoDataText("Ainda não há dados disponíveis");
+        piechart.setHoleRadius(10f);
+        piechart.setTransparentCircleRadius(15f);
+        Description chartDescription = new Description();
+        chartDescription.setEnabled(false);
+        piechart.setDescription( chartDescription);
     }
     public void setAccountList(){
-        //array que contem os dados das contas
+        //array que contem os dados das contasr
         final ArrayList<AccountItem> accounts = new ArrayList<>();
         //elementos futuramente serão adicionados dinamicamente
         accounts.add(new AccountItem("Titulo",-25.0,new Date()));
@@ -150,4 +158,8 @@ public class MainActivity extends AppCompatActivity
         accountList.setAdapter(accountAdapter);
 
     }
+
+    /**
+     * Created by Gabriel Cardoso on 21/11/2016.
+     */
 }
