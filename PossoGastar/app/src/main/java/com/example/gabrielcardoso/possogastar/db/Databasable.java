@@ -11,9 +11,6 @@ public interface Databasable<T extends Serializable, K> {
     public void save();
     public T getById(K id);
 
-    static List<?> queryAll() {
-        return null;
-    };
 
 
 }

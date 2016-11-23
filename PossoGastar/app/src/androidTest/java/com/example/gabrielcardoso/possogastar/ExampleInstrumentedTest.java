@@ -34,19 +34,5 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void useOrm() throws  Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        DataBaseHelper db = OpenHelperManager.getHelper(appContext, DataBaseHelper.class);
-
-        Dao<Object, Long> dao = db.daoManager(AccountingAccount.class);
-        AccountingAccount acc = (AccountingAccount) dao.queryForId(new Long(1));
-        acc.setParentAccount((AccountingAccount) dao.queryForId(new Long(2)));
-        dao.update(acc);
-//        dao.create(acc);
-//        System.out.print(acc.toString());
-
-        List<Object> listacc = dao.queryForAll();
-        for(Object a : listacc) {
-            Log.d("Teste", a.toString());
-        }
     }
 }
