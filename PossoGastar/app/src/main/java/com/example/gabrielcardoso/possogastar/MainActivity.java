@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         //criando array que conterá informações do gráfico
         List<PieEntry> entries = new ArrayList<>();
-        //futuramente estes dados vão ser buscados do banco de dados:
+        //TODO futuramente estes dados vão ser buscados do banco de dados:
         entries.add(new PieEntry(18.5f, "Comida"));
         entries.add(new PieEntry(26.7f, "Transporte"));
         entries.add(new PieEntry(24.0f, "Xerox"));
@@ -142,10 +143,11 @@ public class MainActivity extends AppCompatActivity
         chartDescription.setEnabled(false);
         piechart.setDescription( chartDescription);
     }
+
     public void setAccountList(){
         //array que contem os dados das contasr
         final ArrayList<AccountItem> accounts = new ArrayList<>();
-        //elementos futuramente serão adicionados dinamicamente
+        //TODO elementos futuramente serão adicionados dinamicamente
         accounts.add(new AccountItem("Titulo",-25.0,new Date()));
         accounts.add(new AccountItem("Titulo",25.5,new Date()));
         accounts.add(new AccountItem("Titulo",75.0,new Date()));
@@ -156,10 +158,20 @@ public class MainActivity extends AppCompatActivity
         AccountItemAdapter accountAdapter = new AccountItemAdapter(this,accounts);
         ListView accountList = (ListView)findViewById(R.id.account_list);
         accountList.setAdapter(accountAdapter);
+        accountList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent accountItemDetailed = new Intent(getApplicationContext(), AccountItemDetailed.class);
+                //TODO mandar informaççoes da conta clicada via intent (na vdd, mandar só a id do banco de dados)
+                startActivity(accountItemDetailed);
+            }
+        });
 
     }
 
     /**
      * Created by Gabriel Cardoso on 21/11/2016.
+     *
+     *
      */
 }
