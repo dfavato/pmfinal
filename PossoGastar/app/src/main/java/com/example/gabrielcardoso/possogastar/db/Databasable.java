@@ -8,7 +8,6 @@ import java.util.List;
  */
 
 public interface Databasable<T extends Serializable, K> {
-    static DataBaseHelper db = null;
     public void save();
     public T getById(K id);
 
@@ -16,8 +15,5 @@ public interface Databasable<T extends Serializable, K> {
         return null;
     };
 
-    static void setDb(DataBaseHelper db) {
-        this.db = db;
-    }
 
 }
