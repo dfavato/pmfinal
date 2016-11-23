@@ -175,3 +175,11 @@ public class MainActivity extends AppCompatActivity
      *
      */
 }
+//TODO listas de coisas pra fazer, sendo feitas
+/*
+-> operações de transferencia (tela etc)
+-> gerenciar contas (mostras lista das contas, poder adicionar e remover)
+-> extrato, detalhes de contas (estou fazendo (GABRIEL))
+-> funcionamento do banco de dados (estou fazendo(DANILO))
+->FAZER PROJETO VOLTAR A COMPILAR 
+*/
