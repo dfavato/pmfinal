@@ -20,7 +20,6 @@ public class AccountItemDetailed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_item_detailed);
-        getActionBar().setDisplayHomeAsUpEnabled(true); //seta a opção de exibir a seta de voltar para true
         //
         //TODO trabalhar para pegar account id por intent
         //TODO pesquisar dados da conta no banco de dados

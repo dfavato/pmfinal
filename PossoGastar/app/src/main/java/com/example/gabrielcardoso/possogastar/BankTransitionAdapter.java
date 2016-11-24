@@ -21,15 +21,15 @@ public class BankTransitionAdapter extends ArrayAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater
+            listItemView = LayoutInflater0
                     .from(getContext())
                     .inflate(R.layout.bank_transition_list_item, parent, false);
         }
         BankTransition item = (BankTransition) getItem(position);
         //setando quantia
         TextView amount = (TextView)listItemView.findViewById(R.id.amount);
+        amount.setTextColor(getContext().getResources().getColor(item.getmAmountTextColor()));
         amount.setText(String.valueOf(item.getmAmount()));
-        amount.setTextColor(item.getmAmountTextColor());
         //setando data
         TextView date = (TextView)listItemView.findViewById(R.id.date);
         date.setText(String.valueOf(item.getmDate()));

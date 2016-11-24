@@ -181,5 +181,5 @@ public class MainActivity extends AppCompatActivity
 -> gerenciar contas (mostras lista das contas, poder adicionar e remover)
 -> extrato, detalhes de contas (estou fazendo (GABRIEL))
 -> funcionamento do banco de dados (estou fazendo(DANILO))
-->FAZER PROJETO VOLTAR A COMPILAR 
+->FAZER PROJETO VOLTAR A COMPILAR
 */
