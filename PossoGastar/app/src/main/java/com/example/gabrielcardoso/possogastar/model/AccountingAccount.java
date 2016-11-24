@@ -10,15 +10,12 @@ import com.j256.ormlite.table.DatabaseTable;
 /**
  * Created by dfavato on 19/11/16.
  */
-@DatabaseTable
+
 public class AccountingAccount extends AbstractAccount {
-    @DatabaseField
     private float budget;
 
-    @DatabaseField(foreign = true)
     private AccountingAccount parentAccount;
 
-    @ForeignCollectionField
     private ForeignCollection<AccountingAccount> childrenAccounts;
 
     public AccountingAccount(){

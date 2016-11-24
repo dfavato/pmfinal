@@ -11,10 +11,8 @@ import java.util.Calendar;
  */
 
 public abstract class AbstractPaymentMethod {
-    @DatabaseField(id = true)
     private Long id;
 
-    @DatabaseField
     private String paymentMethodName;
 
     public abstract Calendar paymentDate();

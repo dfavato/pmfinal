@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by dfavato on 20/11/16.
  */
 
-@DatabaseTable
+
 public class RealAccount extends AbstractAccount {
     public enum TIPO {
         CHECKING_ACCOUNT,
@@ -16,7 +16,6 @@ public class RealAccount extends AbstractAccount {
         MONEY
     }
 
-    @DatabaseField
     private TIPO type;
 
     RealAccount () {

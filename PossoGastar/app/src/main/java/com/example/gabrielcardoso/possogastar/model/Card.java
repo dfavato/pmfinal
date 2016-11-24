@@ -10,15 +10,12 @@ import java.util.GregorianCalendar;
  * Created by dfavato on 20/11/16.
  */
 
-@DatabaseTable
+
 public class Card extends AbstractPaymentMethod {
-    @DatabaseField
     private float limit;
 
-    @DatabaseField
     private byte dueDate; //vencimento
 
-    @DatabaseField
     private byte closeDate; //data de fechamento da fatura
 
     Card() {
