@@ -1,66 +1,77 @@
 package com.example.gabrielcardoso.possogastar.model;
 
 
-import com.j256.ormlite.dao.ForeignCollection;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
-import com.j256.ormlite.table.DatabaseTable;
 
+import android.support.annotation.Nullable;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by dfavato on 19/11/16.
+ * Created by dfavato on 26/11/16.
  */
 
-public class AccountingAccount extends AbstractAccount {
-    private float budget;
-
-    private AccountingAccount parentAccount;
-
-    private ForeignCollection<AccountingAccount> childrenAccounts;
-
-    public AccountingAccount(){
-        this.budget = 0;
-        this.parentAccount = null;
-    }
-
-    public AccountingAccount(String name, float budget){
-        this();
+public class AccountingAccount extends BaseAccount {
+    public AccountingAccount(String name, float budget, AccountingAccount parent) {
+        super(name);
+        this.accountType = ACCOUNT_TYPE.ACCOUNTING;
         this.setBudget(budget);
-        this.setName(name);
+        this.setParentAccount(parent);
+    }
+    public AccountingAccount(String name, float budget) {
+        this(name, budget, null);
+    }
+    public AccountingAccount(BaseAccount base) {
+        this(base.getName(), base.budget);
+        if(base.parentAccount != null) {
+            this.setParentAccount(new AccountingAccount(base.parentAccount));
+        }
+        this.setId(base.getId());
     }
 
-    void setBudget(Float budget) {
-        float amount = budget  - this.budget;
-        this.budget = budget;
-        this.updateParentAccountBudget(budget);
+    private void setParentAccount(AccountingAccount parent) {
+        this.parentAccount = parent;
+    }
+    public AccountingAccount getParentAccount() {
+        return (AccountingAccount) this.parentAccount;
     }
 
-    public void changeBugdet(Float amount) {
+    private void updateBudget(float amount) {
         this.budget += amount;
-        this.updateParentAccountBudget(amount);
+        if(this.getParentAccount() != null) {
+            this.getParentAccount().updateBudget(amount);
+        }
+        //TODO update childrenAccounts budget
     }
 
-    public void setParentAccount(AccountingAccount account) {
-        if(account != this) {
-            this.parentAccount = account;
-        } else {
-            //TODO throw erro, uma conta não pode ser pai dela mesma
-        }
-        this.updateParentAccountBudget(this.budget);
+    private void setBudget(float budget) {
+        this.budget = budget;
+    }
+    public float getBudget() {
+        //TODO get children budgets
+        return this.budget;
     }
 
-    private void updateParentAccountBudget(Float amount) {
-        if(this.parentAccount != null) {
-            this.parentAccount.changeBugdet(amount);
+    @Nullable
+    public static AccountingAccount queryForId(Long id) throws SQLException {
+        BaseAccount b = BaseAccount.queryForId(id);
+        if(b != null && b.accountType == ACCOUNT_TYPE.ACCOUNTING) {
+            return new AccountingAccount(b);
         }
+        return null;
+    }
+
+    public static List<AccountingAccount> queryAll() throws SQLException {
+        List<AccountingAccount> list = new ArrayList<>();
+        for(BaseAccount b: (List<BaseAccount>) BaseAccount.queryForField("accountType", ACCOUNT_TYPE.ACCOUNTING)) {
+            list.add(new AccountingAccount(b));
+        }
+        return list;
     }
 
     @Override
     public String toString() {
-        String str = super.toString();
-        if(this.parentAccount != null) {
-            str += " -> " + this.parentAccount.toString();
-        }
-        return str;
+        return this.getId() + " - " + this.getName() + " (" + this.getBudget() + ") " + (this.getParentAccount() == null ? "" : this.getParentAccount().getId()+"");
     }
 }

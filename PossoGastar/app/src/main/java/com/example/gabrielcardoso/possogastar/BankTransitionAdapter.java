@@ -21,7 +21,7 @@ public class BankTransitionAdapter extends ArrayAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater0
+            listItemView = LayoutInflater
                     .from(getContext())
                     .inflate(R.layout.bank_transition_list_item, parent, false);
         }

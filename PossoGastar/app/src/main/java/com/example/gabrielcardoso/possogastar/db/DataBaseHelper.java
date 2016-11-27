@@ -5,15 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.gabrielcardoso.possogastar.R;
-import com.example.gabrielcardoso.possogastar.model.AccountingAccount;
-import com.example.gabrielcardoso.possogastar.model.Card;
+import com.example.gabrielcardoso.possogastar.model.BaseAccount;
+import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
 import java.sql.SQLException;
-import java.util.HashMap;
+
 
 /**
  * Created by dfavato on 19/11/16.
@@ -25,8 +23,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     //Classes que devem ser transformadas em tabelas
     public static final Class<?>[] CLASSES = new Class[] {
-            AccountingAccount.class,
-            Card.class
+            BaseAccount.class,
+            BasePaymentMethod.class
     };
 
     public DataBaseHelper(Context context) {
@@ -38,6 +36,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DataBaseHelper.class.getName(), "onCreate");
             for (Class c: CLASSES) {
+                Log.i(DataBaseHelper.class.getName(), "Tabela " + c.getName() + " criada.");
                 TableUtils.createTable(connectionSource, c);
             }
         } catch (SQLException e) {
@@ -48,7 +47,15 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        Log.i(DataBaseHelper.class.getName(), "onUpgrade");
+        try {
+            Log.i(DataBaseHelper.class.getName(), "onUpdate");
+            for (Class c : CLASSES) {
+                TableUtils.dropTable(connectionSource, c, true);
+            }
+            onCreate(db, connectionSource);
+        } catch (SQLException e) {
+            Log.e(DataBaseHelper.class.getName(), "Can't update databse", e);
+        }
     }
 
     @Override

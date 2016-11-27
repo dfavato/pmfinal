@@ -1,42 +1,89 @@
 package com.example.gabrielcardoso.possogastar.model;
 
+import android.content.Context;
+import android.provider.ContactsContract;
+import android.util.Log;
+
+import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by dfavato on 20/11/16.
  */
 
 
-public class Card extends AbstractPaymentMethod {
-    private float limit;
-
-    private byte dueDate; //vencimento
-
-    private byte closeDate; //data de fechamento da fatura
-
+public class Card extends BasePaymentMethod {
     Card() {
-        this.limit = 0;
     }
-    public Card(Float limit) {
-        this();
+    public Card(String name, Float limit, byte dueDate, byte closeDate) {
+        super(name);
+        this.paymentType = PaymentType.CARD;
         setLimit(limit);
+        setCloseDate(closeDate);
+        setDueDate(dueDate);
+    }
+    public Card(String name, int limit, int dueDate, int closeDate) {
+        this(name, (float)limit, (byte)dueDate, (byte)closeDate);
+    }
+    private Card(BasePaymentMethod base) {
+        this(base.getName(), base.limit, base.dueDate, base.closeDate);
+        this.setId(base.getId());
     }
 
-    public void setLimit(Float limit) {
+    void setDueDate(byte dueDate) {
+        this.dueDate = dueDate;
+    }
+    void setCloseDate(byte closeDate) {
+        this.closeDate = closeDate;
+    }
+    void setLimit(Float limit) {
         this.limit = limit;
     }
+    byte getDueDate() {
+        return this.dueDate;
+    }
+    byte getCloseDate() {
+        return this.closeDate;
+    }
 
+    @Override
     public Calendar paymentDate() {
         Calendar today = Calendar.getInstance();
+        int month = today.get(Calendar.MONTH);
         if(today.get(Calendar.DAY_OF_MONTH) > this.closeDate) {
-            //fatura fechada pagamento só no próximo vencimento
-            return new GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH)+1, this.dueDate);
-        } else {
-            return new GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), this.dueDate);
+            //fatura fechada pagamento só no vencimento do próximo mês
+            month++;
         }
+        return new GregorianCalendar(today.get(Calendar.YEAR), month, this.dueDate);
     }
+
+
+    public static Card queryForId(Long id) throws SQLException {
+        BasePaymentMethod b = BasePaymentMethod.queryForId(id);
+        if(b != null) {
+            if(b.paymentType == PaymentType.CARD) {
+                Card c = new Card(b);
+                return c;
+            }
+        }
+        return null;
+    }
+
+
+    public static List<Card> queryAll() throws SQLException {
+        List<Card> list = new ArrayList<Card>();
+        for(BasePaymentMethod b: (List<BasePaymentMethod>) BasePaymentMethod.queryForField("paymentType", PaymentType.CARD)) {
+            list.add(new Card(b));
+        }
+        return list;
+    }
+
 }
