@@ -148,12 +148,12 @@ public class MainActivity extends AppCompatActivity
         //array que contem os dados das contasr
         final ArrayList<AccountItem> accounts = new ArrayList<>();
         //TODO elementos futuramente serão adicionados dinamicamente
-        accounts.add(new AccountItem("Titulo",-25.0,new Date()));
-        accounts.add(new AccountItem("Titulo",25.5,new Date()));
-        accounts.add(new AccountItem("Titulo",75.0,new Date()));
+        accounts.add(new AccountItem("Titulo",-25.0,new Date(),1));
+        accounts.add(new AccountItem("Titulo",25.5,new Date(),2));
+        accounts.add(new AccountItem("Titulo",75.0,new Date(),3));
         //criando uma conta a mais que serve para scroolar o ultimo elemento, que pode vir a ficar
         //escondido sobre o botao flutuando
-        accounts.add(new AccountItem("",00.0,new Date(),View.INVISIBLE));
+        accounts.add(new AccountItem("",00.0,new Date(),-1,View.INVISIBLE));
         //adaptados do array de contas para a ListView
         AccountItemAdapter accountAdapter = new AccountItemAdapter(this,accounts);
         ListView accountList = (ListView)findViewById(R.id.account_list);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent accountItemDetailed = new Intent(getApplicationContext(), AccountItemDetailed.class);
-                //TODO mandar informaççoes da conta clicada via intent (na vdd, mandar só a id do banco de dados)
+                accountItemDetailed.putExtra(AccountItemDetailed.ACCOUNT_ID, String.valueOf(accounts.get(position).getmId()));
                 startActivity(accountItemDetailed);
             }
         });
