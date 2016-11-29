@@ -54,10 +54,9 @@ public class BasePaymentMethod {
         this.dueDate = 0;
     }
 
-    public static void setDb(Context context) throws SQLException {
-        if(db == null) {
-            db = new DataBaseHelper(context);
-            dao = DaoManager.createDao(db.getConnectionSource(), BasePaymentMethod.class);
+    public static void setDao(Context context) throws SQLException {
+        if(dao == null) {
+            dao = db.getDao(BasePaymentMethod.class);
         }
     }
 

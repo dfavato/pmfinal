@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.gabrielcardoso.possogastar.R;
 import com.example.gabrielcardoso.possogastar.model.BaseAccount;
 import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
+import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -24,7 +25,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     //Classes que devem ser transformadas em tabelas
     public static final Class<?>[] CLASSES = new Class[] {
             BaseAccount.class,
-            BasePaymentMethod.class
+            BasePaymentMethod.class,
+            MoneyTransfer.class
     };
 
     public DataBaseHelper(Context context) {
@@ -47,15 +49,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        try {
-            Log.i(DataBaseHelper.class.getName(), "onUpdate");
-            for (Class c : CLASSES) {
-                TableUtils.dropTable(connectionSource, c, true);
-            }
-            onCreate(db, connectionSource);
-        } catch (SQLException e) {
-            Log.e(DataBaseHelper.class.getName(), "Can't update databse", e);
-        }
+
     }
 
     @Override

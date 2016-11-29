@@ -3,6 +3,8 @@ package com.example.gabrielcardoso.possogastar.db;
 
 
 import com.example.gabrielcardoso.possogastar.model.BaseAccount;
+import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
+import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
 import java.io.File;
@@ -14,7 +16,9 @@ import java.io.File;
 public class DatabaseConfigUtil extends OrmLiteConfigUtil {
     //Classes que devem ser transformadas em tabelas
     public static final Class<?>[] CLASSES = new Class[] {
-        BaseAccount.class
+        BaseAccount.class,
+        BasePaymentMethod.class,
+        MoneyTransfer.class
     };
 
     public static void main(String[] args) {

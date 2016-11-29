@@ -32,7 +32,6 @@ public class BaseAccount {
         MONEY
     }
 
-    static DataBaseHelper db = null;
     static Dao<BaseAccount, Long> dao = null;
 
     @DatabaseField(generatedId = true)
@@ -79,6 +78,9 @@ public class BaseAccount {
     public String getName() {
         return this.name;
     }
+    public ACCOUNT_TYPE getAccountType() {
+        return this.accountType;
+    }
 
     @Override
     public String toString() {
@@ -90,9 +92,8 @@ public class BaseAccount {
         return this.getClass() == obj.getClass() && this.getId().equals(((AccountingAccount)obj).getId());
     }
 
-    public static void setDb(Context context) throws SQLException {
-        if(db == null) {
-            db = new DataBaseHelper(context);
+    public static void setDao(DataBaseHelper db) throws SQLException {
+        if(dao == null) {
             dao = db.getDao(BaseAccount.class);
         }
     }
