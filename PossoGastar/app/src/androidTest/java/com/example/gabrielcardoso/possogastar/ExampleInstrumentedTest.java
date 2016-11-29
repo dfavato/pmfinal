@@ -6,6 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
 import com.example.gabrielcardoso.possogastar.model.AccountingAccount;
 import com.example.gabrielcardoso.possogastar.model.BaseAccount;
 import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
@@ -34,9 +35,11 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void testAccountCreation() throws  Exception {
-        BaseAccount.setDb(InstrumentationRegistry.getTargetContext());
+        DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
+        BaseAccount.setDao(db);
         AccountingAccount acc1 = new AccountingAccount("Alimentação", 100);
         AccountingAccount acc2 = new AccountingAccount("Jantar", 50, acc1);
+        AccountingAccount acc3 = new AccountingAccount("Alimentação", 100);
         RealAccount rac1 = new RealAccount("Santander", BaseAccount.REAL_TYPE.CHECKING_ACCOUNT);
         RealAccount rac2 = new RealAccount("Itaú", BaseAccount.REAL_TYPE.SAVINGS);
 
@@ -56,12 +59,12 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void testPaymentMethodCreation() throws Exception {
-        BasePaymentMethod.setDb(InstrumentationRegistry.getTargetContext());
+        DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
+        BasePaymentMethod.setDao(db);
         Card c1 = new Card("Mastercard", 100, 1, 25);
         Card c2 = new Card("Visa", 200, 2, 26);
         Cash dinheiro = new Cash("Carteira");
         Cash cofre = new Cash("Cofre");
-
 
         c1.save();
         c2.save();
@@ -79,11 +82,6 @@ public class ExampleInstrumentedTest {
         assertEquals(c1.getId(), Card.queryForId(c1.getId()).getId());
         assertNull(Cash.queryForId(c1.getId()));
 
-        String d;
-        for(Card b: Card.queryAll()) {
-            d = b.paymentDate().get(Calendar.DAY_OF_MONTH) + "/" + b.paymentDate().get(Calendar.MONTH) + "/" + b.paymentDate().get(Calendar.YEAR);
-            Log.d("Teste", d);
-        }
 
     }
 }

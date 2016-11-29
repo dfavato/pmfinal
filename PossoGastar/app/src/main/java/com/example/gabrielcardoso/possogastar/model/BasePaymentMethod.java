@@ -10,6 +10,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class BasePaymentMethod {
         CARD,
         CASH
     }
-    public static DataBaseHelper db = null;
     private static Dao<BasePaymentMethod, Long> dao = null;
 
     @DatabaseField(generatedId = true)
@@ -54,7 +54,7 @@ public class BasePaymentMethod {
         this.dueDate = 0;
     }
 
-    public static void setDao(Context context) throws SQLException {
+    public static void setDao(DataBaseHelper db) throws SQLException {
         if(dao == null) {
             dao = db.getDao(BasePaymentMethod.class);
         }
@@ -84,8 +84,8 @@ public class BasePaymentMethod {
         }
     }
 
-    public Calendar paymentDate() {
-        return GregorianCalendar.getInstance();
+    public Date paymentDate() {
+        return new Date(GregorianCalendar.getInstance().get(Calendar.DATE));
     }
 
     public static BasePaymentMethod queryForId(Long id) throws SQLException {

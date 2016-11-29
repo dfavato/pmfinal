@@ -12,6 +12,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -55,14 +56,16 @@ public class Card extends BasePaymentMethod {
     }
 
     @Override
-    public Calendar paymentDate() {
+    public Date paymentDate() {
         Calendar today = Calendar.getInstance();
+        Calendar date;
         int month = today.get(Calendar.MONTH);
         if(today.get(Calendar.DAY_OF_MONTH) > this.closeDate) {
             //fatura fechada pagamento só no vencimento do próximo mês
             month++;
         }
-        return new GregorianCalendar(today.get(Calendar.YEAR), month, this.dueDate);
+        date = new GregorianCalendar(today.get(Calendar.YEAR), month, this.dueDate);
+        return new Date(date.get(Calendar.DATE));
     }
 
 

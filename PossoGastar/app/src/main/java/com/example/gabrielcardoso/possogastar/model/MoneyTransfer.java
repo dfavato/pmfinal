@@ -2,6 +2,7 @@ package com.example.gabrielcardoso.possogastar.model;
 
 import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import static com.example.gabrielcardoso.possogastar.model.BaseAccount.ACCOUNT_TYPE;
@@ -9,6 +10,7 @@ import static com.example.gabrielcardoso.possogastar.model.BaseAccount.ACCOUNT_T
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,15 +25,15 @@ public class MoneyTransfer {
         TRANSFER
     }
 
-    private static Dao<MoneyTransfer, Long> dao;
+    private static Dao<MoneyTransfer, Long> dao = null;
 
     @DatabaseField(generatedId = true)
     private Long id;
 
-    @DatabaseField(foreign = true, foreignColumnName = "ORIGIN", canBeNull = false)
+    @DatabaseField(foreign = true, columnName = "ORIGIN", canBeNull = false)
     private BaseAccount origin;
 
-    @DatabaseField(foreign = true, foreignColumnName = "DESTINY", canBeNull = false)
+    @DatabaseField(foreign = true, columnName = "DESTINY", canBeNull = false)
     private BaseAccount destiny;
 
     @DatabaseField
@@ -41,10 +43,10 @@ public class MoneyTransfer {
     private BasePaymentMethod paymentMethod;
 
     @DatabaseField
-    private Calendar paymentDate;
+    private Date paymentDate;
 
     @DatabaseField
-    private Calendar realDate;
+    private Date realDate;
 
     @DatabaseField
     private TRANSFER_TYPE type;
@@ -78,7 +80,7 @@ public class MoneyTransfer {
     private void setId(Long id) {
         this.id = id;
     }
-    private void setRealDate(Calendar date) {
+    private void setRealDate(Date date) {
         this.realDate = date;
     }
     private void setPaymentDate() {
@@ -119,7 +121,9 @@ public class MoneyTransfer {
     }
 
     public static void setDao(DataBaseHelper db) throws SQLException {
-        dao = db.getDao(MoneyTransfer.class);
+        if(dao == null) {
+            dao = db.getDao(MoneyTransfer.class);
+        }
     }
 
     public static MoneyTransfer queryForId(Long id) throws SQLException {
