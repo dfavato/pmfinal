@@ -60,12 +60,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:visibility="gone"
             android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
     </RelativeLayout>
     <ListView
         android:id="@+id/lista_contas_reais"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:paddingBottom="8dp"
         android:layout_height="wrap_content"></ListView>
@@ -98,12 +96,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:visibility="gone"
             android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
     </RelativeLayout>
     <ListView
         android:id="@+id/lista_contas_contabeis"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:paddingTop="8dp"
         android:layout_height="wrap_content"></ListView>
