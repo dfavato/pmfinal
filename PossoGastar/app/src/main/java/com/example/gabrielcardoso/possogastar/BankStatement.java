@@ -3,11 +3,17 @@ package com.example.gabrielcardoso.possogastar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,22 +29,25 @@ public class BankStatement extends AppCompatActivity {
     }
 
     public void setChart(){
-        BarChart chart = (BarChart) findViewById(R.id.chart);
-        List<BarEntry> entries = new ArrayList<>();
+        LineChart chart = (LineChart) findViewById(R.id.chart);
+        List<Entry> entries = new ArrayList<>();
         //TODO pegar saldos dos meses passados
-        entries.add(new BarEntry(1f,200f));
-        entries.add(new BarEntry(2f,350f));
-        entries.add(new BarEntry(3f,-30f));
-        entries.add(new BarEntry(4f,200f));
-        entries.add(new BarEntry(5f,100f));
-        entries.add(new BarEntry(6f,500f));
-        entries.add(new BarEntry(7f,650f));
+        entries.add(new Entry(1f,200f));
+        entries.add(new Entry(2f,350f));
+        entries.add(new Entry(3f,-30f));
+        entries.add(new Entry(4f,200f));
+        entries.add(new Entry(5f,100f));
+        entries.add(new Entry(6f,500f));
+        entries.add(new Entry(7f,650f));
+        entries.add(new Entry(8f,450f));
+        entries.add(new Entry(9f,500f));
+        entries.add(new Entry(10f,475f));
+        entries.add(new Entry(13f,300f));
+        Toast.makeText(this, "Pressione sobre o grafico para dar zoom", Toast.LENGTH_LONG).show();
         //
-        BarDataSet set = new BarDataSet(entries, "BarDataSet");
-        BarData data = new BarData(set);
-        data.setBarWidth(0.9f); // set custom bar width
+        LineDataSet set = new LineDataSet(entries, "LineDataSet");
+        LineData data = new LineData(set);
         chart.setData(data);
-        chart.setFitBars(true); // make the x-axis fit exactly all bars
         chart.invalidate(); // refresh
     }
 
