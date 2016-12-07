@@ -5,4 +5,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_new_real_account">NewRealAccount</string>
+
+    <string-array name="account_types_array">
+        <item>Item 01</item>
+        <item>Item 02</item>
+    </string-array>
 </resources>

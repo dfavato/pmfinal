@@ -1,6 +1,8 @@
 package com.example.gabrielcardoso.possogastar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -30,13 +33,16 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    FloatingActionMenu menuOpcoes;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+    /**
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +50,9 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });**/
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,6 +65,32 @@ public class MainActivity extends AppCompatActivity
 
         setChart();
         setAccountList();
+
+
+
+        /*floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu first item clicked
+                Intent facebookIntent = getOpenFacebookIntent(MainActivity.this);
+                startActivity(facebookIntent);
+
+            }
+        });
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu second item clicked
+                Intent twitterIntent = getOpenTwitterIntent(MainActivity.this);
+                startActivity(twitterIntent);
+
+            }
+        });
+        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO something when floating action menu third item clicked
+                Intent linkdinIntent = getOpenLinkdinIntent(MainActivity.this);
+                startActivity(linkdinIntent);
+            }
+        });*/
     }
 
     @Override
@@ -167,6 +201,45 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    public static Intent getOpenFacebookIntent(Context context) {
+
+        try {
+            context.getPackageManager()
+                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("fb://page/376227335860239")); //Trys to make intent with FB's URI
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/karthikofficialpage")); //catches and opens a url to the desired page
+        }
+    }
+
+    public static Intent getOpenTwitterIntent(Context context) {
+
+        try {
+            context.getPackageManager()
+                    .getPackageInfo("com.twitter.android", 0); //Checks if Twitter is even installed.
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://twitter.com/drkarthiik")); //Trys to make intent with Twitter's's URI
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://twitter.com/drkarthiik")); //catches and opens a url to the desired page
+        }
+    }
+
+    public static Intent getOpenLinkdinIntent(Context context) {
+
+        try {
+            context.getPackageManager()
+                    .getPackageInfo("com.linkedin.android", 0); //Checks if Linkdin is even installed.
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.linkedin.com/in/karthikm128")); //Trys to make intent with Linkdin's URI
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.linkedin.com/in/karthikm128")); //catches and opens a url to the desired page
+        }
     }
 
     /**
