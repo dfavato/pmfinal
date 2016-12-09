@@ -29,7 +29,7 @@ public class MoneyTransfer {
         TRANSFER
     }
 
-    private static Dao<MoneyTransfer, Long> dao = null;
+    public static Dao<MoneyTransfer, Long> dao = null;
 
     @DatabaseField(generatedId = true)
     private Long id;

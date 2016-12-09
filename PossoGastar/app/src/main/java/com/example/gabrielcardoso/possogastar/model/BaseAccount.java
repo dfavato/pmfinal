@@ -9,11 +9,18 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -121,8 +128,29 @@ public class BaseAccount {
         return dao.queryForEq(fieldName, value);
     }
 
-    public List<MoneyTransfer> extrato(Calendar begin, Calendar end) throws SQLException {
-        return MoneyTransfer.queryAllForAccount(this);
+    public List<MoneyTransfer> statement(Date begin, Date end) throws SQLException {
+        QueryBuilder<MoneyTransfer, Long> qb = MoneyTransfer.dao.queryBuilder();
+        Where where = qb.where();
+        where.between("paymentDate", begin, end);
+        where.and();
+        where.eq("origin", this);
+        where.or();
+        where.eq("destiny", this);
+        PreparedQuery<MoneyTransfer> pq = qb.prepare();
+        return MoneyTransfer.dao.query(pq);
+    }
+
+    public float saldo(Date data) throws SQLException {
+        float saldoAtual = 0;
+        List<MoneyTransfer> transfers = this.statement(new Date(0), data);
+        for(MoneyTransfer t: transfers) {
+            if(this.equals(t.getDestiny())) {
+                saldoAtual += t.getValue();
+            } else {
+                saldoAtual -= t.getValue();
+            }
+        }
+        return  saldoAtual;
     }
 
 }

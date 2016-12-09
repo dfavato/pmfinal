@@ -18,8 +18,10 @@ import com.example.gabrielcardoso.possogastar.model.RealAccount;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -110,4 +112,24 @@ public class ExampleInstrumentedTest {
         assertEquals(MoneyTransfer.queryForId(transfer.getId()).getOrigin().getName(), origin.getName());
 
     }
+
+    @Test
+    public void testarExtratoSaldo() throws Exception {
+        DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
+        setDaos(db);
+        Date hoje = new Date(GregorianCalendar.getInstance().get(Calendar.DATE));
+        BaseAccount acc = AccountingAccount.queryAll().get(0);
+        List<MoneyTransfer> stmt = acc.statement(new Date(0), hoje);
+        for(MoneyTransfer t: stmt) {
+            Log.d("Extrato", t.toString());
+        }
+        Log.d("Saldo", acc.saldo(hoje)+"");
+    }
+
+    private void setDaos(DataBaseHelper db) throws SQLException {
+        BaseAccount.setDao(db);
+        BasePaymentMethod.setDao(db);
+        MoneyTransfer.setDao(db);
+    }
+
 }
