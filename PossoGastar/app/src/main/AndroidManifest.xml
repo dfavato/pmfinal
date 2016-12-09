@@ -21,7 +21,11 @@
         <activity android:name=".ManageAccounts" />
         <activity android:name=".BankStatement" />
         <activity android:name=".TransferMoney" />
-        <activity android:name=".AccountItemDetailed"></activity>
+        <activity android:name=".AccountItemDetailed" />
+        <activity
+            android:name=".NewRealAccount"
+            android:label="@string/title_activity_new_real_account"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

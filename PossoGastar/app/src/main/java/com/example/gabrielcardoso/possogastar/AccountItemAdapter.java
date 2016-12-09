@@ -1,13 +1,19 @@
 package com.example.gabrielcardoso.possogastar;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gabriel ==
@@ -40,5 +46,20 @@ public class AccountItemAdapter extends ArrayAdapter {
         else
             listItemView.setVisibility(View.VISIBLE);
         return listItemView;
+    }
+
+    public static void setAccountItemList(Integer listId, ArrayList<AccountItem> items, Context context, Activity activity){
+        //adaptados do array de contas para a ListView
+        AccountItemAdapter accountAdapter = new AccountItemAdapter(context, items);
+        ListView accountList = (ListView)activity.findViewById(listId);
+        accountList.setAdapter(accountAdapter);
+        accountList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent accountItemDetailed = new Intent(context, AccountItemDetailed.class);
+                accountItemDetailed.putExtra(AccountItemDetailed.ACCOUNT_ID, String.valueOf(items.get(position).getmId()));
+                context.startActivity(accountItemDetailed);
+            }
+        });
     }
 }
