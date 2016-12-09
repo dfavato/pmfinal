@@ -30,10 +30,10 @@ public class MoneyTransfer {
     @DatabaseField(generatedId = true)
     private Long id;
 
-    @DatabaseField(foreign = true, columnName = "ORIGIN", canBeNull = false)
+    @DatabaseField(foreign = true, columnName = "ORIGIN", canBeNull = false, foreignAutoRefresh = true)
     private BaseAccount origin;
 
-    @DatabaseField(foreign = true, columnName = "DESTINY", canBeNull = false)
+    @DatabaseField(foreign = true, columnName = "DESTINY", canBeNull = false, foreignAutoRefresh = true)
     private BaseAccount destiny;
 
     @DatabaseField
