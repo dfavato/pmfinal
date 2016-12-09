@@ -12,10 +12,15 @@ import com.example.gabrielcardoso.possogastar.model.BaseAccount;
 import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
 import com.example.gabrielcardoso.possogastar.model.Card;
 import com.example.gabrielcardoso.possogastar.model.Cash;
+import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
 import com.example.gabrielcardoso.possogastar.model.RealAccount;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import static org.junit.Assert.*;
 
 /**
@@ -82,6 +87,27 @@ public class ExampleInstrumentedTest {
         assertEquals(c1.getId(), Card.queryForId(c1.getId()).getId());
         assertNull(Cash.queryForId(c1.getId()));
 
+
+    }
+
+    @Test
+    public void testMoneyTransferCreation() throws Exception {
+        DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
+        MoneyTransfer.setDao(db);
+        BaseAccount.setDao(db);
+        BasePaymentMethod.setDao(db);
+
+        BaseAccount destiny = AccountingAccount.queryAll().get(0);
+        BaseAccount origin = RealAccount.queryAll().get(0);
+        BasePaymentMethod method = Card.queryAll().get(0);
+
+        MoneyTransfer transfer = new MoneyTransfer(origin, destiny, method, 10, new Date(GregorianCalendar.getInstance().get(Calendar.DATE)));
+
+        transfer.save();
+
+        assertEquals(MoneyTransfer.queryForId(transfer.getId()).getDestiny().getId(), destiny.getId());
+        assertEquals(MoneyTransfer.queryForId(transfer.getId()).getType(), MoneyTransfer.TRANSFER_TYPE.EXPENSES);
+        assertEquals(MoneyTransfer.queryForId(transfer.getId()).getOrigin().getName(), origin.getName());
 
     }
 }

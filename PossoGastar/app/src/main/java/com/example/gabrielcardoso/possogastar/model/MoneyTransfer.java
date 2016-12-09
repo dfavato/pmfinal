@@ -19,7 +19,7 @@ import java.util.List;
 
 @DatabaseTable
 public class MoneyTransfer {
-    private enum  TRANSFER_TYPE {
+    public enum  TRANSFER_TYPE {
         EARNINGS,
         EXPENSES,
         TRANSFER
@@ -55,7 +55,7 @@ public class MoneyTransfer {
     }
 
     public MoneyTransfer(BaseAccount origin, BaseAccount destiny, BasePaymentMethod paymentMethod,
-                         float value) {
+                         float value, Date day) {
         this();
         this.setOrigin(origin);
         this.setDestiny(destiny);
@@ -114,6 +114,12 @@ public class MoneyTransfer {
     }
     public BasePaymentMethod getPaymentMethod() {
         return this.paymentMethod;
+    }
+    public Long getId() {
+        return id;
+    }
+    public TRANSFER_TYPE getType() {
+        return type;
     }
 
     public void save() throws SQLException {
