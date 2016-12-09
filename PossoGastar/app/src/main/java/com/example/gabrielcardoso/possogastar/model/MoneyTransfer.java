@@ -1,5 +1,8 @@
 package com.example.gabrielcardoso.possogastar.model;
 
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+
 import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DataType;
@@ -11,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -121,6 +125,17 @@ public class MoneyTransfer {
     public TRANSFER_TYPE getType() {
         return type;
     }
+    public float getValue() {
+        return value;
+    }
+
+    public Date getPaymentDate() {
+        return this.paymentDate;
+    }
+    public String getFormatedPaymentDate(String format) {
+        //TODO melhorar isso aqui para considerar o format passado
+        return this.getPaymentDate().getDay() + "/" + this.getPaymentDate().getMonth() + "/" + this.getPaymentDate().getYear();
+    }
 
     public void save() throws SQLException {
         dao.createOrUpdate(this);
@@ -151,4 +166,10 @@ public class MoneyTransfer {
         return list;
     }
 
+    @Override
+    public String toString() {
+        return "Valor: " + this.getValue() + " | Data:" + this.getFormatedPaymentDate("") +
+                " | De:" + this.getOrigin().getName() + " | Para:" + this.getDestiny().getName();
+
+    }
 }

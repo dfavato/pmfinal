@@ -12,6 +12,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -118,6 +119,10 @@ public class BaseAccount {
 
     public static List<?> queryForField(String fieldName, Object value) throws SQLException {
         return dao.queryForEq(fieldName, value);
+    }
+
+    public List<MoneyTransfer> extrato(Calendar begin, Calendar end) throws SQLException {
+        return MoneyTransfer.queryAllForAccount(this);
     }
 
 }
