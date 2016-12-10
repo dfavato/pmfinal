@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
+import com.example.gabrielcardoso.possogastar.model.AccountingAccount;
 import com.example.gabrielcardoso.possogastar.model.BaseAccount;
 import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
 import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
@@ -31,7 +32,7 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -164,17 +165,19 @@ public class MainActivity extends AppCompatActivity
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         //criando array que conterá informações do gráfico
         List<PieEntry> entries = new ArrayList<>();
-        //TODO futuramente estes dados vão ser buscados do banco de dados:
-        entries.add(new PieEntry(18.5f, "Comida"));
-        entries.add(new PieEntry(26.7f, "Transporte"));
-        entries.add(new PieEntry(24.0f, "Xerox"));
-        entries.add(new PieEntry(30.8f, "Pao de batata"));
-        //
+        try {
+            List<AccountingAccount> accounts = AccountingAccount.queryAll();
+            for(AccountingAccount a: accounts) {
+                entries.add(new PieEntry(a.saldo(Utils.getFirstDayOfCurrentMonth(),
+                        Utils.getLastDayOfCurrentMonth()), a.getName()));
+            }
+        } catch (SQLException e) {
+            Log.e("ERRO SQL", e.getMessage());
+        }
+
         configChart(pieChart);
         PieDataSet set = new PieDataSet(entries, "Gastos do mês");
-        set.setColors(ColorTemplate.MATERIAL_COLORS
-
-        );
+        set.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(set);
         pieChart.setData(data);
         pieChart.invalidate(); // refresh
