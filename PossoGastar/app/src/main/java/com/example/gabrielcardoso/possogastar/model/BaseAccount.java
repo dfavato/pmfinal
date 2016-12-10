@@ -141,7 +141,7 @@ public class BaseAccount {
     }
 
     public float saldo(Date date) throws SQLException {
-        return saldo(new Date(), date);
+        return saldo(new Date(0), date);
     }
 
     public float saldo(Date begin, Date end) throws SQLException {
