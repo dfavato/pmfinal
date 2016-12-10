@@ -40,10 +40,10 @@ public class BaseAccount {
         MONEY
     }
 
-    static Dao<BaseAccount, Long> dao = null;
+    static Dao<BaseAccount, Integer> dao = null;
 
     @DatabaseField(generatedId = true)
-    private Long id;
+    private Integer id;
 
     @DatabaseField(canBeNull = false)
     ACCOUNT_TYPE accountType;
@@ -74,13 +74,13 @@ public class BaseAccount {
         this.setName(name);
     }
 
-    void setId(Long accountId) {
+    void setId(Integer accountId) {
         this.id = accountId;
     }
     void setName(String name) {
         this.name = name;
     }
-    public Long getId() {
+    public Integer getId() {
         return this.id;
     }
     public String getName() {
@@ -116,7 +116,7 @@ public class BaseAccount {
         }
     }
 
-    public static BaseAccount queryForId(Long id) throws SQLException {
+    public static BaseAccount queryForId(Integer id) throws SQLException {
         return dao.queryForId(id);
     }
 
@@ -129,7 +129,7 @@ public class BaseAccount {
     }
 
     public List<MoneyTransfer> statement(Date begin, Date end) throws SQLException {
-        QueryBuilder<MoneyTransfer, Long> qb = MoneyTransfer.dao.queryBuilder();
+        QueryBuilder<MoneyTransfer, Integer> qb = MoneyTransfer.dao.queryBuilder();
         Where where = qb.where();
         where.between("paymentDate", begin, end);
         where.and();

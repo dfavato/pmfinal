@@ -27,7 +27,7 @@ public class BankTransition {
     private Integer mAmountTextColor = UNSETTED;
 
     public BankTransition(String Date, String Time, Integer ReceiverId, String ReceiverTitle,
-                          Integer SenderId, String SenderTitle, double Amount, Integer IdToFocus ){
+                          Integer SenderId, String SenderTitle, double Amount, Integer IdToFocus){
         this.mDate = Date;
         this.mTime = Time;
         this.mReceiverId = ReceiverId;

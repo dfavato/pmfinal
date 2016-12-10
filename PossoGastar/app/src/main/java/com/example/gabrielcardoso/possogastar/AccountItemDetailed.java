@@ -3,9 +3,12 @@ package com.example.gabrielcardoso.possogastar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.gabrielcardoso.possogastar.model.BaseAccount;
+import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -13,6 +16,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,13 +78,19 @@ public class AccountItemDetailed extends AppCompatActivity {
         listView.setAdapter(transitionAdapter);
     }
 
-    public ArrayList<BankTransition> getLastTransitions(){
-        //TODO pegar as ultimas transações envolvendo essa conta no banco de dados
+    public ArrayList<BankTransition> getLastTransitions() {
         ArrayList<BankTransition> bankTransitions = new ArrayList<>();
-        bankTransitions.add(new BankTransition("01/06/2016","08:00",15,"Lanchonete da faculdade",mAccountId,"Carteira",8.50,mAccountId));
-        bankTransitions.add(new BankTransition("03/06/2016","11:00",mAccountId,"Carteira",15,"conta banco do brasil",50.00,mAccountId));
-        bankTransitions.add(new BankTransition("05/06/2016","18:00",17,"Gasolina",mAccountId,"Carteira",50,mAccountId));
-        bankTransitions.add(new BankTransition("09/06/2016","12:30",mAccountId,"Carteira",15,"conta banco do brasil",70.00,mAccountId));
+        try {
+            BaseAccount acc = BaseAccount.queryForId(this.mAccountId);
+            List<MoneyTransfer> transfers = MoneyTransfer.queryAllForAccount(acc);
+            for(MoneyTransfer t: transfers) {
+                bankTransitions.add(new BankTransition(t.getFormatedPaymentDate("dd/MM/yyyy"),
+                        "00:00", t.getOrigin().getId(), t.getOrigin().getName(),
+                        t.getDestiny().getId(), t.getDestiny().getName(), t.getValue(), this.mAccountId));
+            }
+        } catch (SQLException e) {
+            Log.e("ERRO SQL", e.getMessage());
+        }
         return bankTransitions;
     }
 }

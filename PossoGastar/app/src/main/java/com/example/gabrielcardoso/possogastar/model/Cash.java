@@ -22,7 +22,7 @@ public class Cash extends BasePaymentMethod {
         this.setId(base.getId());
     }
 
-    public static Cash queryForId(Long id) throws SQLException {
+    public static Cash queryForId(Integer id) throws SQLException {
         BasePaymentMethod b = BasePaymentMethod.queryForId(id);
         if(b != null) {
             if(b.getClass() == Cash.class) {
