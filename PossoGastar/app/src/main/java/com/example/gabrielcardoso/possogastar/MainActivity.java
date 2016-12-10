@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataBaseHelper db = new DataBaseHelper(getApplicationContext());
+        setDaos(db);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -255,10 +257,14 @@ public class MainActivity extends AppCompatActivity
      *
      */
 
-    public static void setDaos(DataBaseHelper db) throws SQLException {
-        BaseAccount.setDao(db);
-        BasePaymentMethod.setDao(db);
-        MoneyTransfer.setDao(db);
+    public static void setDaos(DataBaseHelper db) {
+        try {
+            BaseAccount.setDao(db);
+            BasePaymentMethod.setDao(db);
+            MoneyTransfer.setDao(db);
+        } catch (SQLException e) {
+            Log.e("SQL ERROR", e.getMessage());
+        }
     }
 }
 //TODO listas de coisas pra fazer, sendo feitas
