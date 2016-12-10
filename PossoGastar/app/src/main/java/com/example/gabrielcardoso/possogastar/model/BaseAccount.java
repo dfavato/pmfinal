@@ -156,4 +156,8 @@ public class BaseAccount {
         }
         return  saldoAtual;
     }
+
+    public boolean equals(BaseAccount acc) {
+        return this.getId() == acc.getId() && this.accountType == this.accountType;
+    }
 }

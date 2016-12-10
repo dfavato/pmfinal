@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -66,6 +67,18 @@ public class AccountingAccount extends BaseAccount {
         List<AccountingAccount> list = new ArrayList<>();
         for(BaseAccount b: (List<BaseAccount>) BaseAccount.queryForField("accountType", ACCOUNT_TYPE.ACCOUNTING)) {
             list.add(new AccountingAccount(b));
+        }
+        return list;
+    }
+
+    public static List<AccountingAccount> queryAllParent() throws SQLException {
+        List<AccountingAccount> list = queryAll();
+        AccountingAccount acc;
+        for(Iterator<AccountingAccount> iterator = list.iterator(); iterator.hasNext();) {
+            acc = iterator.next();
+            if(acc.getParentAccount() == null) {
+                iterator.remove();
+            }
         }
         return list;
     }
