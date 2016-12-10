@@ -140,9 +140,13 @@ public class BaseAccount {
         return MoneyTransfer.dao.query(pq);
     }
 
-    public float saldo(Date data) throws SQLException {
+    public float saldo(Date date) throws SQLException {
+        return saldo(new Date(), date);
+    }
+
+    public float saldo(Date begin, Date end) throws SQLException {
         float saldoAtual = 0;
-        List<MoneyTransfer> transfers = this.statement(new Date(0), data);
+        List<MoneyTransfer> transfers = this.statement(begin, end);
         for(MoneyTransfer t: transfers) {
             if(this.equals(t.getDestiny())) {
                 saldoAtual += t.getValue();
@@ -152,5 +156,4 @@ public class BaseAccount {
         }
         return  saldoAtual;
     }
-
 }

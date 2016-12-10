@@ -34,7 +34,9 @@ public class AccountItemAdapter extends ArrayAdapter {
         }
         AccountItem item = (AccountItem) getItem(position);
         TextView valueView = (TextView) listItemView.findViewById(R.id.value);
+        TextView titleView = (TextView) listItemView.findViewById(R.id.title);
         valueView.setText(  String.valueOf(item.getmAmount()) );
+        titleView.setText(item.getmTitle());
         if(item.getmAmount()>0.0) valueView.setTextColor(parent.getResources().getColor(R.color.colorPrimary));
         else valueView.setTextColor(parent.getResources().getColor(R.color.colorAccent));
         //alterar valores do item

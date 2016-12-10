@@ -41,4 +41,7 @@ public class AccountItem {
             this(title,amount,lastUse,id);
             this.mVisibility = visibility;
         }
+        AccountItem(String title, float amount, Date lastUse, Long id) {
+            this(title, (double)amount, lastUse, Integer.parseInt(id.toString()));
+        }
 }

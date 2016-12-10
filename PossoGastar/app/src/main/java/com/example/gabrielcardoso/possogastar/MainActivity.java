@@ -24,6 +24,7 @@ import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
 import com.example.gabrielcardoso.possogastar.model.BaseAccount;
 import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
 import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
+import com.example.gabrielcardoso.possogastar.model.RealAccount;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -35,6 +36,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -190,10 +192,16 @@ public class MainActivity extends AppCompatActivity
     public void setAccountList(){
         //array que contem os dados das contasr
         final ArrayList<AccountItem> accounts = new ArrayList<>();
-        //TODO elementos futuramente serão adicionados dinamicamente
-        accounts.add(new AccountItem("Titulo",-25.0,new Date(),1));
-        accounts.add(new AccountItem("Titulo",25.5,new Date(),2));
-        accounts.add(new AccountItem("Titulo",75.0,new Date(),3));
+        Date hoje = new Date(GregorianCalendar.getInstance().getTimeInMillis());
+
+        try {
+            List<RealAccount> realAccounts = RealAccount.queryAll();
+            for(RealAccount r: realAccounts) {
+                accounts.add(new AccountItem(r.getName(), r.saldo(hoje), hoje, r.getId()));
+            }
+        } catch (SQLException e) {
+            Log.e("ERRO SQL", e.getMessage());
+        }
         //criando uma conta a mais que serve para scroolar o ultimo elemento, que pode vir a ficar
         //escondido sobre o botao flutuando
         accounts.add(new AccountItem("",00.0,new Date(),-1,View.INVISIBLE));
@@ -258,6 +266,7 @@ public class MainActivity extends AppCompatActivity
      */
 
     public static void setDaos(DataBaseHelper db) {
+        //Configura os Data Access Objects de cada classe que tem persistencia no Banco de Dados
         try {
             BaseAccount.setDao(db);
             BasePaymentMethod.setDao(db);
