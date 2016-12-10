@@ -1,5 +1,6 @@
 package com.example.gabrielcardoso.possogastar;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
+import com.example.gabrielcardoso.possogastar.model.BaseAccount;
+import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
+import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -26,6 +31,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DataBaseHelper db = new DataBaseHelper(getApplicationContext());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -247,6 +254,12 @@ public class MainActivity extends AppCompatActivity
      *
      *
      */
+
+    public static void setDaos(DataBaseHelper db) throws SQLException {
+        BaseAccount.setDao(db);
+        BasePaymentMethod.setDao(db);
+        MoneyTransfer.setDao(db);
+    }
 }
 //TODO listas de coisas pra fazer, sendo feitas
 /*

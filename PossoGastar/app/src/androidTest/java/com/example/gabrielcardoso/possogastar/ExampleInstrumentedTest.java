@@ -103,7 +103,7 @@ public class ExampleInstrumentedTest {
         BaseAccount origin = RealAccount.queryAll().get(0);
         BasePaymentMethod method = Card.queryAll().get(0);
 
-        MoneyTransfer transfer = new MoneyTransfer(origin, destiny, method, 10, new Date(GregorianCalendar.getInstance().get(Calendar.DATE)));
+        MoneyTransfer transfer = new MoneyTransfer(origin, destiny, method, 10, GregorianCalendar.getInstance().getTime());
 
         transfer.save();
 
@@ -117,7 +117,7 @@ public class ExampleInstrumentedTest {
     public void testarExtratoSaldo() throws Exception {
         DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
         setDaos(db);
-        Date hoje = new Date(GregorianCalendar.getInstance().get(Calendar.DATE));
+        Date hoje = GregorianCalendar.getInstance().getTime();
         BaseAccount acc = AccountingAccount.queryAll().get(0);
         List<MoneyTransfer> stmt = acc.statement(new Date(0), hoje);
         for(MoneyTransfer t: stmt) {
