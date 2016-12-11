@@ -54,12 +54,13 @@ public class ExampleInstrumentedTest {
         AccountingAccount acc1 = new AccountingAccount("Alimentação", 100);
         AccountingAccount acc2 = new AccountingAccount("Jantar", 50, acc1);
         AccountingAccount acc3 = new AccountingAccount("Alimentação", 100);
-        AccountingAccount acc4 = new AccountingAccount("Cinema", 20);
-        AccountingAccount acc5 = new AccountingAccount("Diversão", 100);
+        AccountingAccount acc4 = new AccountingAccount("Diversão", 20);
+        AccountingAccount acc5 = new AccountingAccount("Cinema", 100, acc4);
         AccountingAccount acc6 = new AccountingAccount("Compras", 1600);
-        AccountingAccount acc7 = new AccountingAccount("PS4", 0);
+        AccountingAccount acc7 = new AccountingAccount("PS4", 0, acc6);
         AccountingAccount acc8 = new AccountingAccount("Jantar de Natal", 0, acc2);
         AccountingAccount acc9 = new AccountingAccount("Saldo Anterior", 0);
+        AccountingAccount acc10 = new AccountingAccount("Teatro", 0, acc4);
         RealAccount rac1 = new RealAccount("Santander", BaseAccount.REAL_TYPE.CHECKING_ACCOUNT);
         RealAccount rac2 = new RealAccount("Itaú", BaseAccount.REAL_TYPE.SAVINGS);
         RealAccount rac3 = new RealAccount("Carteira", BaseAccount.REAL_TYPE.MONEY);
@@ -74,6 +75,7 @@ public class ExampleInstrumentedTest {
         acc7.save();
         acc8.save();
         acc9.save();
+        acc10.save();
         rac1.save();
         rac2.save();
         rac3.save();

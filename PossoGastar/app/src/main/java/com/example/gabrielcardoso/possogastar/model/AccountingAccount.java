@@ -95,6 +95,7 @@ public class AccountingAccount extends BaseAccount {
                 saldoAtual -= t.getValue();
             }
         }
+        //TODO somar saldo de contas filhas
         return  saldoAtual;
     }
 
@@ -102,4 +103,5 @@ public class AccountingAccount extends BaseAccount {
     public String toString() {
         return this.getId() + " - " + this.getName() + " (" + this.getBudget() + ") " + (this.getParentAccount() == null ? "" : this.getParentAccount().getId()+"");
     }
+
 }

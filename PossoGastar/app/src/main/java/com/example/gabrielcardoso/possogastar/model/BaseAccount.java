@@ -97,7 +97,7 @@ public class BaseAccount {
 
     @Override
     public boolean equals(Object obj) {
-        return this.getClass() == obj.getClass() && this.getId().equals(((AccountingAccount)obj).getId());
+        return obj instanceof BaseAccount && this.getId().equals(((BaseAccount)obj).getId());
     }
 
     public static void setDao(DataBaseHelper db) throws SQLException {
@@ -156,4 +156,5 @@ public class BaseAccount {
         }
         return  saldoAtual;
     }
+
 }
