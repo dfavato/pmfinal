@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import com.github.clans.fab.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FloatingActionMenu menuOpcoes;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    FloatingActionButton fabContaReal, floatingActionButton2, floatingActionButton3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +53,9 @@ public class MainActivity extends AppCompatActivity
         setDaos(db);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        fabContaReal = (FloatingActionButton) findViewById(R.id.floating_conta_real);
         setSupportActionBar(toolbar);
-    /**
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });**/
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,14 +71,15 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        /*floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+        fabContaReal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu first item clicked
-                Intent facebookIntent = getOpenFacebookIntent(MainActivity.this);
-                startActivity(facebookIntent);
+                Intent intentContaReal = new Intent(MainActivity.this, NewRealAccount.class);
+                intentContaReal.putExtra("origem", "main");
+                startActivity(intentContaReal);
 
             }
-        });
+        });/*
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked

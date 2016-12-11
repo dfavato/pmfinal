@@ -22,42 +22,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-        <!--fab:fab_colorNormal="@color/app_primary"
-        fab:fab_colorPressed="@color/app_primary_pressed"
-        fab:fab_colorRipple="@color/app_ripple"-->
-
-    <!--<com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|end">-->
-
-        <!--<android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/real_account" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/accounting_account" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/transfer" />-->
-
-    <!--</com.getbase.floatingactionbutton.FloatingActionsMenu>-->
-
     <include layout="@layout/content_main" />
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/social_floating_menu"
+        android:id="@+id/floating_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -95,7 +62,7 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/floating_facebook"
+            android:id="@+id/floating_transferencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/transfer"
@@ -105,7 +72,7 @@
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/floating_twitter"
+            android:id="@+id/floating_conta_contabil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/accounting_account"
@@ -115,7 +82,7 @@
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/floating_linkdin"
+            android:id="@+id/floating_conta_real"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/real_account"

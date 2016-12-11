@@ -19,42 +19,35 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:gravity="center_horizontal"
+        android:layout_marginLeft="16dp"
         android:id="@+id/textView3"
         android:layout_column="0"/>
 
     <android.support.design.widget.TextInputLayout android:id="@+id/text_input_nome_conta_real"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp">
         <EditText
             style="@style/edit_text"
             android:id="@+id/nomeContaReal"
             android:textSize="9pt"
+            android:layout_marginLeft="16dp"
             android:hint="Nome"
-            android:imeOptions="actionDone" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout android:id="@+id/text_input_saldo_conta_real"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            style="@style/edit_text"
-            android:id="@+id/saldoContaReal"
-            android:textSize="9pt"
-            android:hint="Saldo Inicial"
             android:imeOptions="actionDone" />
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <TextView
             android:text="Tipo:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView4"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"
             android:textSize="9pt"/>
 
@@ -62,6 +55,7 @@
             android:id="@+id/tipos_conta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
 
@@ -69,7 +63,7 @@
         android:text="Salvar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
+        android:id="@+id/salvar_conta_real"
         android:layout_gravity="left"
         android:layout_marginTop="20dp"/>
 
@@ -77,6 +71,6 @@
         android:text="Cancelar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button1"/>
+        android:id="@+id/cancelar_cadastro_conta_real"/>
 
 </LinearLayout>
