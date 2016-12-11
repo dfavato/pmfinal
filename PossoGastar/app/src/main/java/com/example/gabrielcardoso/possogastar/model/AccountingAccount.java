@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -54,7 +56,7 @@ public class AccountingAccount extends BaseAccount {
     }
 
     @Nullable
-    public static AccountingAccount queryForId(Long id) throws SQLException {
+    public static AccountingAccount queryForId(Integer id) throws SQLException {
         BaseAccount b = BaseAccount.queryForId(id);
         if(b != null && b.accountType == ACCOUNT_TYPE.ACCOUNTING) {
             return new AccountingAccount(b);
@@ -68,6 +70,32 @@ public class AccountingAccount extends BaseAccount {
             list.add(new AccountingAccount(b));
         }
         return list;
+    }
+
+    public static List<AccountingAccount> queryAllParent() throws SQLException {
+        List<AccountingAccount> list = queryAll();
+        AccountingAccount acc;
+        for(Iterator<AccountingAccount> iterator = list.iterator(); iterator.hasNext();) {
+            acc = iterator.next();
+            if(acc.getParentAccount() != null) {
+                iterator.remove();
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public float saldo(Date begin, Date end) throws SQLException {
+        float saldoAtual = 0;
+        List<MoneyTransfer> transfers = this.statement(begin, end);
+        for(MoneyTransfer t: transfers) {
+            if(this.equals(t.getDestiny())) {
+                saldoAtual += t.getValue();
+            } else {
+                saldoAtual -= t.getValue();
+            }
+        }
+        return  saldoAtual;
     }
 
     @Override

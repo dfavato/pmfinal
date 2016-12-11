@@ -29,10 +29,10 @@ public class MoneyTransfer {
         TRANSFER
     }
 
-    public static Dao<MoneyTransfer, Long> dao = null;
+    public static Dao<MoneyTransfer, Integer> dao = null;
 
     @DatabaseField(generatedId = true)
-    private Long id;
+    private Integer id;
 
     @DatabaseField(foreign = true, columnName = "ORIGIN", canBeNull = false, foreignAutoRefresh = true)
     private BaseAccount origin;
@@ -81,7 +81,7 @@ public class MoneyTransfer {
     private void setValue(float value) {
         this.value = value;
     }
-    private void setId(Long id) {
+    private void setId(Integer id) {
         this.id = id;
     }
     private void setRealDate(Date date) {
@@ -119,7 +119,7 @@ public class MoneyTransfer {
     public BasePaymentMethod getPaymentMethod() {
         return this.paymentMethod;
     }
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
     public TRANSFER_TYPE getType() {
@@ -147,7 +147,7 @@ public class MoneyTransfer {
         }
     }
 
-    public static MoneyTransfer queryForId(Long id) throws SQLException {
+    public static MoneyTransfer queryForId(Integer id) throws SQLException {
         return dao.queryForId(id);
     }
 

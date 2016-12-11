@@ -69,7 +69,7 @@ public class Card extends BasePaymentMethod {
     }
 
 
-    public static Card queryForId(Long id) throws SQLException {
+    public static Card queryForId(Integer id) throws SQLException {
         BasePaymentMethod b = BasePaymentMethod.queryForId(id);
         if(b != null) {
             if(b.paymentType == PaymentType.CARD) {

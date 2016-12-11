@@ -80,8 +80,6 @@ public class BaseAccount {
     void setName(String name) {
         this.name = name;
     }
-    void setRealType(String type) {
-    }
     public Long getId() {
         return this.id;
     }

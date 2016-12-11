@@ -22,7 +22,7 @@ public class RealAccount extends BaseAccount {
     }
 
     @Nullable
-    public static RealAccount queryForId(Long id) throws SQLException {
+    public static RealAccount queryForId(Integer id) throws SQLException {
         BaseAccount b = BaseAccount.queryForId(id);
         if(b != null && b.accountType == ACCOUNT_TYPE.REAL) {
             return new RealAccount(b);

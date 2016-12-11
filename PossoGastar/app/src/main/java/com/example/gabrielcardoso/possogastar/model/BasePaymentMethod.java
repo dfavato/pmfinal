@@ -25,10 +25,10 @@ public class BasePaymentMethod {
         CARD,
         CASH
     }
-    private static Dao<BasePaymentMethod, Long> dao = null;
+    private static Dao<BasePaymentMethod, Integer> dao = null;
 
     @DatabaseField(generatedId = true)
-    private Long id;
+    private Integer id;
 
     @DatabaseField(unique = true, canBeNull = false)
     private String name;
@@ -60,7 +60,7 @@ public class BasePaymentMethod {
         }
     }
 
-    void setId(Long id) {
+    void setId(Integer id) {
         this.id = id;
     }
     void setName(String name) {
@@ -69,7 +69,7 @@ public class BasePaymentMethod {
     public String getName() {
         return this.name;
     }
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -88,7 +88,7 @@ public class BasePaymentMethod {
         return new Date(GregorianCalendar.getInstance().get(Calendar.DATE));
     }
 
-    public static BasePaymentMethod queryForId(Long id) throws SQLException {
+    public static BasePaymentMethod queryForId(Integer id) throws SQLException {
         return dao.queryForId(id);
     }
 

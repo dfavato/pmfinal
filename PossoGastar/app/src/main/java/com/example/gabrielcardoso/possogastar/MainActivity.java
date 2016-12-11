@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
         //criando array que conterá informações do gráfico
         List<PieEntry> entries = new ArrayList<>();
         try {
-            List<AccountingAccount> accounts = AccountingAccount.queryAll();
+            List<AccountingAccount> accounts = AccountingAccount.queryAllParent();
             for(AccountingAccount a: accounts) {
                 entries.add(new PieEntry(a.saldo(Utils.getFirstDayOfCurrentMonth(),
                         Utils.getLastDayOfCurrentMonth()), a.getName()));
