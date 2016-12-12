@@ -54,9 +54,6 @@ public class BaseAccount {
     @DatabaseField(foreign = true, canBeNull = true)
     BaseAccount parentAccount;
 
-    @ForeignCollectionField
-    ForeignCollection<BaseAccount> childrenAccount;
-
     @DatabaseField(canBeNull = true)
     float budget;
 

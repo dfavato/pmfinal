@@ -156,4 +156,20 @@ public class ExampleInstrumentedTest {
         MoneyTransfer.setDao(db);
     }
 
+    @Test
+    public void testChildrenAccounts() throws Exception {
+        DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
+        setDaos(db);
+        AccountingAccount diversao = new AccountingAccount((BaseAccount) BaseAccount.queryForField("name", "Diversão").get(0));
+
+        for(AccountingAccount acc: AccountingAccount.queryAll()) {
+            Log.d("Conta", acc.toString());
+        }
+
+        assertNotNull(diversao);
+        assertNotNull(diversao.getChildrenAccount());
+        assertEquals(diversao.getChildrenAccount().size(), 2);
+
+    }
+
 }

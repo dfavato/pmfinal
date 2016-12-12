@@ -4,6 +4,8 @@ package com.example.gabrielcardoso.possogastar.model;
 
 import android.support.annotation.Nullable;
 
+import com.j256.ormlite.dao.ForeignCollection;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 
 public class AccountingAccount extends BaseAccount {
+    //Construtores
     public AccountingAccount(String name, float budget, AccountingAccount parent) {
         super(name);
         this.accountType = ACCOUNT_TYPE.ACCOUNTING;
@@ -32,21 +35,13 @@ public class AccountingAccount extends BaseAccount {
         this.setId(base.getId());
     }
 
+    //Getters e Setters
     private void setParentAccount(AccountingAccount parent) {
         this.parentAccount = parent;
     }
     public AccountingAccount getParentAccount() {
         return (AccountingAccount) this.parentAccount;
     }
-
-    private void updateBudget(float amount) {
-        this.budget += amount;
-        if(this.getParentAccount() != null) {
-            this.getParentAccount().updateBudget(amount);
-        }
-        //TODO update childrenAccounts budget
-    }
-
     private void setBudget(float budget) {
         this.budget = budget;
     }
@@ -54,7 +49,15 @@ public class AccountingAccount extends BaseAccount {
         //TODO get children budgets
         return this.budget;
     }
+    public List<AccountingAccount> getChildrenAccount () throws SQLException {
+        List<AccountingAccount> children = new ArrayList<>();
+        for(BaseAccount b: (List<BaseAccount>) BaseAccount.queryForField("parentAccount_id", this)) {
+            children.add(new AccountingAccount(b));
+        }
+        return children;
+    }
 
+    //Static methods
     @Nullable
     public static AccountingAccount queryForId(Integer id) throws SQLException {
         BaseAccount b = BaseAccount.queryForId(id);
@@ -84,6 +87,17 @@ public class AccountingAccount extends BaseAccount {
         return list;
     }
 
+    //Other methods
+    private void updateBudget(float amount) {
+        this.budget += amount;
+        if(this.getParentAccount() != null) {
+            this.getParentAccount().updateBudget(amount);
+        }
+        if(amount < 0) {
+            //TODO update childrenAccounts budget
+        }
+    }
+
     @Override
     public float saldo(Date begin, Date end) throws SQLException {
         float saldoAtual = 0;
@@ -96,6 +110,9 @@ public class AccountingAccount extends BaseAccount {
             }
         }
         //TODO somar saldo de contas filhas
+        for(AccountingAccount acc: this.getChildrenAccount()) {
+            saldoAtual += acc.saldo(begin, end);
+        }
         return  saldoAtual;
     }
 
