@@ -82,8 +82,7 @@ public class NewRealAccount extends AppCompatActivity implements View.OnClickLis
         }
         else if(v == botaoSalvar) {
             if(camposObrigatoriosPreenchidos()) {
-                BaseAccount contaBase = new BaseAccount(nomeTexto);
-                RealAccount novaConta = new RealAccount(contaBase);
+                RealAccount novaConta = new RealAccount(nomeTexto, (BaseAccount.REAL_TYPE) spinner.getSelectedItem());
                 try {
                     novaConta.save();
                 } catch (SQLException e) {

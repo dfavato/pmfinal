@@ -157,11 +157,14 @@ public class MainActivity extends AppCompatActivity
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         //criando array que conterá informações do gráfico
         List<PieEntry> entries = new ArrayList<>();
+        float saldo;
         try {
             List<AccountingAccount> accounts = AccountingAccount.queryAllParent();
             for(AccountingAccount a: accounts) {
-                entries.add(new PieEntry(a.saldo(Utils.getFirstDayOfCurrentMonth(),
-                        Utils.getLastDayOfCurrentMonth()), a.getName()));
+                saldo = a.saldo(Utils.getFirstDayOfCurrentMonth(), Utils.getLastDayOfCurrentMonth());
+                if(saldo > 0) {
+                    entries.add(new PieEntry(saldo, a.getName()));
+                }
             }
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());
