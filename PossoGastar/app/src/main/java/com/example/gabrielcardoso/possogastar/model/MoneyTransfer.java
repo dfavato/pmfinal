@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
 import static com.example.gabrielcardoso.possogastar.model.BaseAccount.ACCOUNT_TYPE;
 
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by dfavato on 29/11/16.
@@ -133,8 +135,7 @@ public class MoneyTransfer {
         return this.paymentDate;
     }
     public String getFormatedPaymentDate(String format) {
-        //TODO melhorar isso aqui para considerar o format passado
-        return this.getPaymentDate().getDay() + "/" + this.getPaymentDate().getMonth() + "/" + this.getPaymentDate().getYear();
+        return android.text.format.DateFormat.format(format, this.getPaymentDate()).toString();
     }
 
     public void save() throws SQLException {

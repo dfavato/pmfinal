@@ -85,8 +85,8 @@ public class AccountItemDetailed extends AppCompatActivity {
             List<MoneyTransfer> transfers = MoneyTransfer.queryAllForAccount(acc);
             for(MoneyTransfer t: transfers) {
                 bankTransitions.add(new BankTransition(t.getFormatedPaymentDate("dd/MM/yyyy"),
-                        "00:00", t.getOrigin().getId(), t.getOrigin().getName(),
-                        t.getDestiny().getId(), t.getDestiny().getName(), t.getValue(), this.mAccountId));
+                        "00:00", t.getDestiny().getId(), t.getDestiny().getName(),
+                        t.getOrigin().getId(), t.getOrigin().getName(), t.getValue(), this.mAccountId));
             }
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());
