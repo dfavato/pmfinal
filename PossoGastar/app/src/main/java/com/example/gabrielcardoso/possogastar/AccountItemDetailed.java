@@ -18,6 +18,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AccountItemDetailed extends AppCompatActivity {
@@ -80,9 +82,12 @@ public class AccountItemDetailed extends AppCompatActivity {
 
     public ArrayList<BankTransition> getLastTransitions() {
         ArrayList<BankTransition> bankTransitions = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        Date today = cal.getTime();
+        cal.add(Calendar.DATE, -30);
+        Date minus30days = cal.getTime();
         try {
-            BaseAccount acc = BaseAccount.queryForId(this.mAccountId);
-            List<MoneyTransfer> transfers = MoneyTransfer.queryAllForAccount(acc);
+            List<MoneyTransfer> transfers = BaseAccount.queryForId(this.mAccountId).statement(today, minus30days);
             for(MoneyTransfer t: transfers) {
                 bankTransitions.add(new BankTransition(t.getFormatedPaymentDate("dd/MM/yyyy"),
                         "00:00", t.getDestiny().getId(), t.getDestiny().getName(),
