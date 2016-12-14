@@ -56,16 +56,17 @@ public class Card extends BasePaymentMethod {
     }
 
     @Override
-    public Date paymentDate() {
-        Calendar today = Calendar.getInstance();
-        Calendar date;
-        int month = today.get(Calendar.MONTH);
-        if(today.get(Calendar.DAY_OF_MONTH) > this.closeDate) {
+    public Date paymentDate(Date real) {
+        Calendar date = Calendar.getInstance();
+        Calendar cReal = Calendar.getInstance();
+        cReal.setTime(real);
+        date.set(Calendar.DAY_OF_MONTH, this.closeDate);
+        date.set(Calendar.MONTH, cReal.get(Calendar.MONTH));
+        if(cReal.get(Calendar.DAY_OF_MONTH) > this.closeDate) {
             //fatura fechada pagamento só no vencimento do próximo mês
-            month++;
+            date.add(Calendar.MONTH, 1);
         }
-        date = new GregorianCalendar(today.get(Calendar.YEAR), month, this.dueDate);
-        return new Date(date.get(Calendar.DATE));
+        return date.getTime();
     }
 
 

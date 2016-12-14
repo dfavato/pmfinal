@@ -1,6 +1,9 @@
 package com.example.gabrielcardoso.possogastar;
 
+import android.icu.text.DateFormat;
 import android.view.View;
+
+import com.example.gabrielcardoso.possogastar.model.MoneyTransfer;
 
 /**
  * Created by Gabriel Cardoso on 21/11/2016.
@@ -37,11 +40,17 @@ public class BankTransition {
         this.mAmount = Amount;
         this.mIdToFocus = IdToFocus;
         treatAccountFocus();
-
     }
     public BankTransition(String Date, String Time, Integer ReceiverId, String ReceiverTitle,
                           Integer SenderId, String SenderTitle, double Amount ){
         this(Date,Time,ReceiverId,ReceiverTitle,SenderId,SenderTitle,Amount,UNSETTED);
+    }
+    public BankTransition(MoneyTransfer transfer, int mIdToFocus) {
+        this(android.text.format.DateFormat.format("dd/MM/yy", transfer.getPaymentDate()).toString(),
+                android.text.format.DateFormat.format("HH:mm", transfer.getPaymentDate()).toString(),
+                transfer.getDestiny().getId(), transfer.getDestiny().getName(),
+                transfer.getOrigin().getId(), transfer.getOrigin().getName(),
+                transfer.getValue(), mIdToFocus);
     }
 
     public void treatAccountFocus(){

@@ -67,7 +67,8 @@ public class MoneyTransfer {
         this.setDestiny(destiny);
         this.setPaymentMethod(paymentMethod);
         this.setValue(value);
-        this.setPaymentDate();
+        this.setPaymentDate(day);
+        this.setRealDate(day);
         this.setType();
     }
 
@@ -89,8 +90,8 @@ public class MoneyTransfer {
     private void setRealDate(Date date) {
         this.realDate = date;
     }
-    private void setPaymentDate() {
-        this.paymentDate = this.getPaymentMethod().paymentDate();
+    private void setPaymentDate(Date day) {
+        this.paymentDate = this.getPaymentMethod().paymentDate(day);
     }
     private void setType() {
         if(this.getOrigin().getAccountType() == ACCOUNT_TYPE.ACCOUNTING) {
@@ -134,9 +135,6 @@ public class MoneyTransfer {
     public Date getPaymentDate() {
         return this.paymentDate;
     }
-    public String getFormatedPaymentDate(String format) {
-        return android.text.format.DateFormat.format(format, this.getPaymentDate()).toString();
-    }
 
     public void save() throws SQLException {
         dao.createOrUpdate(this);
@@ -169,8 +167,10 @@ public class MoneyTransfer {
 
     @Override
     public String toString() {
-        return "Valor: " + this.getValue() + " | Data:" + this.getFormatedPaymentDate("") +
-                " | De:" + this.getOrigin().getName() + " | Para:" + this.getDestiny().getName();
+        return "Valor: " + this.getValue() + " | Data:" +
+                android.text.format.DateFormat.format("dd/MM/yy", this.getPaymentDate()) +
+                " | De:" + this.getOrigin().getName() + " | Para:" + this.getDestiny().getName() +
+                " | Pgt: " + this.getPaymentMethod().toString();
 
     }
 }

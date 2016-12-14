@@ -84,8 +84,8 @@ public class BasePaymentMethod {
         }
     }
 
-    public Date paymentDate() {
-        return new Date(GregorianCalendar.getInstance().get(Calendar.DATE));
+    public Date paymentDate(Date real) {
+        return real;
     }
 
     public static BasePaymentMethod queryForId(Integer id) throws SQLException {

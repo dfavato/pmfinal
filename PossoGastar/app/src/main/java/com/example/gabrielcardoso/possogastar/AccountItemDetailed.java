@@ -42,8 +42,13 @@ public class AccountItemDetailed extends AppCompatActivity {
             finish();
         }
         this.mAccountId = Integer.valueOf(comming.getStringExtra(ACCOUNT_ID));
-        //TODO pesquisar dados da conta no banco de dados
-        //
+        try {
+            BaseAccount acc = BaseAccount.queryForId(this.mAccountId);
+            this.mAccountTitle = acc.getName();
+        } catch (SQLException e) {
+            Log.e("SQL ERRO", e.getMessage());
+        }
+
         setChart();
         displayAccountInfo();
         displayLastTransitions();
@@ -87,11 +92,9 @@ public class AccountItemDetailed extends AppCompatActivity {
         cal.add(Calendar.DATE, -30);
         Date minus30days = cal.getTime();
         try {
-            List<MoneyTransfer> transfers = BaseAccount.queryForId(this.mAccountId).statement(today, minus30days);
+            List<MoneyTransfer> transfers = BaseAccount.queryForId(this.mAccountId).statement();
             for(MoneyTransfer t: transfers) {
-                bankTransitions.add(new BankTransition(t.getFormatedPaymentDate("dd/MM/yyyy"),
-                        "00:00", t.getDestiny().getId(), t.getDestiny().getName(),
-                        t.getOrigin().getId(), t.getOrigin().getName(), t.getValue(), this.mAccountId));
+                bankTransitions.add(new BankTransition(t, this.mAccountId));
             }
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());

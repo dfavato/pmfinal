@@ -36,6 +36,7 @@ import com.github.mikephil.charting.utils.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -190,12 +191,11 @@ public class MainActivity extends AppCompatActivity
     public void setAccountList(){
         //array que contem os dados das contasr
         final ArrayList<AccountItem> accounts = new ArrayList<>();
-        Date hoje = new Date(GregorianCalendar.getInstance().getTimeInMillis());
-
+        Date hoje = Calendar.getInstance().getTime();
         try {
             List<RealAccount> realAccounts = RealAccount.queryAll();
             for(RealAccount r: realAccounts) {
-                accounts.add(new AccountItem(r.getName(), r.saldo(hoje), hoje, r.getId()));
+                accounts.add(new AccountItem(r.getName(), r.saldo(hoje), r.lastUsed(), r.getId()));
             }
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());

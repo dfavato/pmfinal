@@ -3,6 +3,7 @@ package com.example.gabrielcardoso.possogastar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Gabriel ==
@@ -35,8 +33,10 @@ public class AccountItemAdapter extends ArrayAdapter {
         AccountItem item = (AccountItem) getItem(position);
         TextView valueView = (TextView) listItemView.findViewById(R.id.value);
         TextView titleView = (TextView) listItemView.findViewById(R.id.title);
+        TextView dateView = (TextView) listItemView.findViewById(R.id.last_mov);
         valueView.setText(  String.valueOf(item.getmAmount()) );
         titleView.setText(item.getmTitle());
+        dateView.setText(DateFormat.format("dd/MM", item.getmLastUse()));
         if(item.getmAmount()>0.0) valueView.setTextColor(parent.getResources().getColor(R.color.colorPrimary));
         else valueView.setTextColor(parent.getResources().getColor(R.color.colorAccent));
         //alterar valores do item

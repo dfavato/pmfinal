@@ -1,10 +1,10 @@
 package com.example.gabrielcardoso.possogastar;
 
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.support.annotation.RequiresApi;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.example.gabrielcardoso.possogastar.db.DataBaseHelper;
@@ -20,8 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -112,22 +112,24 @@ public class ExampleInstrumentedTest {
         BaseAccount destiny, origin;
         BasePaymentMethod method;
         MoneyTransfer transfer;
+        Calendar cal = Calendar.getInstance();
 
         for(int j=0; j<3; j++) {
             origin = (BaseAccount) BaseAccount.queryForField("name", "Saldo Anterior").get(0);
             destiny = RealAccount.queryAll().get(j);
             method = (BasePaymentMethod) BasePaymentMethod.queryForField("name", "Dinheiro").get(0);
-            transfer = new MoneyTransfer(origin, destiny, method, 1000*(j+1), GregorianCalendar.getInstance().getTime());
+            transfer = new MoneyTransfer(origin, destiny, method, 1000*(j+1), cal.getTime());
             transfer.save();
             for(int i=0; i<7;i++) {
                 for(int k=0; k<3; k++) {
                     destiny = AccountingAccount.queryAll().get(i);
                     origin = RealAccount.queryAll().get(j);
                     method = (BasePaymentMethod) BasePaymentMethod.queryAll().get(k);
-                    transfer = new MoneyTransfer(origin, destiny, method, (i+1)*(j+1)*(k+1), GregorianCalendar.getInstance().getTime());
+                    transfer = new MoneyTransfer(origin, destiny, method, (i+1)*(j+1)*(k+1), cal.getTime());
                     transfer.save();
                     assertEquals(MoneyTransfer.queryForId(transfer.getId()).getDestiny().getId(), destiny.getId());
                     assertEquals(MoneyTransfer.queryForId(transfer.getId()).getOrigin().getName(), origin.getName());
+                    cal.add(Calendar.DATE, -1);
                 }
 
             }
@@ -138,7 +140,7 @@ public class ExampleInstrumentedTest {
     public void testarExtratoSaldo() throws Exception {
         DataBaseHelper db = new DataBaseHelper(InstrumentationRegistry.getTargetContext());
         setDaos(db);
-        Date hoje = GregorianCalendar.getInstance().getTime();
+        Date hoje = Calendar.getInstance().getTime();
         List<RealAccount> accounts = RealAccount.queryAll();
         for(RealAccount acc: accounts) {
             List<MoneyTransfer> stmt = acc.statement(new Date(0), hoje);

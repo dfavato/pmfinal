@@ -12,6 +12,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.stmt.query.OrderBy;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
@@ -125,14 +126,20 @@ public class BaseAccount {
         return dao.queryForEq(fieldName, value);
     }
 
+    public List<MoneyTransfer> statement() throws SQLException {
+        QueryBuilder<MoneyTransfer, Integer> qb = MoneyTransfer.dao.queryBuilder();
+        Where where = qb.where();
+        where.or(where.eq("origin", this), where.eq("destiny", this));
+        qb.orderBy("paymentDate", false);
+        PreparedQuery<MoneyTransfer> pq = qb.prepare();
+        return MoneyTransfer.dao.query(pq);
+    }
+
     public List<MoneyTransfer> statement(Date begin, Date end) throws SQLException {
         QueryBuilder<MoneyTransfer, Integer> qb = MoneyTransfer.dao.queryBuilder();
         Where where = qb.where();
-        where.between("paymentDate", begin, end);
-        where.and();
-        where.eq("origin", this);
-        where.or();
-        where.eq("destiny", this);
+        where.and(where.between("paymentDate", begin, end), where.or(where.eq("origin", this), where.eq("destiny", this)));
+        qb.orderBy("paymentDate", false);
         PreparedQuery<MoneyTransfer> pq = qb.prepare();
         return MoneyTransfer.dao.query(pq);
     }
@@ -152,6 +159,10 @@ public class BaseAccount {
             }
         }
         return  saldoAtual;
+    }
+
+    public Date lastUsed() throws SQLException {
+        return this.statement().get(0).getPaymentDate();
     }
 
 }
