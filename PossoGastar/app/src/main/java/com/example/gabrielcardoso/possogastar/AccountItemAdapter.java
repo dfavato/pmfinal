@@ -36,7 +36,8 @@ public class AccountItemAdapter extends ArrayAdapter {
         TextView dateView = (TextView) listItemView.findViewById(R.id.last_mov);
         valueView.setText(  String.valueOf(item.getmAmount()) );
         titleView.setText(item.getmTitle());
-        dateView.setText(DateFormat.format("dd/MM", item.getmLastUse()));
+        if(item.getmLastUse() != null)
+            dateView.setText(DateFormat.format("dd/MM", item.getmLastUse()));
         if(item.getmAmount()>0.0) valueView.setTextColor(parent.getResources().getColor(R.color.colorPrimary));
         else valueView.setTextColor(parent.getResources().getColor(R.color.colorAccent));
         //alterar valores do item

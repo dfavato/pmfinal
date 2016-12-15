@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FloatingActionMenu menuOpcoes;
-    FloatingActionButton fabContaReal, floatingActionButton2, floatingActionButton3;
+    FloatingActionButton fabContaReal, fabContaContabil, floatingActionButton3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         fabContaReal = (FloatingActionButton) findViewById(R.id.floating_conta_real);
+        fabContaContabil = (FloatingActionButton) findViewById(R.id.floating_conta_contabil);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,21 +75,20 @@ public class MainActivity extends AppCompatActivity
 
         fabContaReal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu first item clicked
                 Intent intentContaReal = new Intent(MainActivity.this, NewRealAccount.class);
                 intentContaReal.putExtra("origem", "main");
                 startActivity(intentContaReal);
 
             }
-        });/*
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+        });
+        fabContaContabil.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu second item clicked
-                Intent twitterIntent = getOpenTwitterIntent(MainActivity.this);
-                startActivity(twitterIntent);
+                Intent intentContaContabil = new Intent(MainActivity.this, NewAccountingAccount.class);
+                intentContaContabil.putExtra("origem", "main");
+                startActivity(intentContaContabil);
 
             }
-        });
+        });/*
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked

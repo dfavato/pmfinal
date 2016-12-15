@@ -11,4 +11,5 @@
         <item>Item 01</item>
         <item>Item 02</item>
     </string-array>
+    <string name="title_activity_new_account_account">NewAccountAccount</string>
 </resources>

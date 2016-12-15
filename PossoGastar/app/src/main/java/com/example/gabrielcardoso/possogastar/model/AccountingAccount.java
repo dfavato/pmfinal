@@ -34,6 +34,7 @@ public class AccountingAccount extends BaseAccount {
         }
         this.setId(base.getId());
     }
+    public AccountingAccount() {}
 
     //Getters e Setters
     private void setParentAccount(AccountingAccount parent) {

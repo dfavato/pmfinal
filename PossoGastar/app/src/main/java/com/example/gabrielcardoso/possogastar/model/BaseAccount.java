@@ -162,7 +162,10 @@ public class BaseAccount {
     }
 
     public Date lastUsed() throws SQLException {
-        return this.statement().get(0).getPaymentDate();
+        if(this.statement().isEmpty())
+            return null;
+        else
+            return this.statement().get(0).getPaymentDate();
     }
 
 }

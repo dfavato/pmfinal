@@ -25,6 +25,10 @@
         <activity
             android:name=".NewRealAccount"
             android:label="@string/title_activity_new_real_account"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewAccountingAccount"
+            android:label="@string/title_activity_new_account_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 
 public class NewRealAccount extends AppCompatActivity implements View.OnClickListener{
-    EditText nomeConta, saldoConta;
+    EditText nomeConta;
     Spinner spinner;
     Button botaoCancelar, botaoSalvar;
     String nomeTexto, intentExtra;
@@ -45,7 +45,6 @@ public class NewRealAccount extends AppCompatActivity implements View.OnClickLis
 
         setSupportActionBar(toolbar);
         preencheSpinner(this);
-        Log.i("MyApp", "########### bla ########");
 
         botaoCancelar.setOnClickListener(this);
         botaoSalvar.setOnClickListener(this);
@@ -72,13 +71,8 @@ public class NewRealAccount extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-
         if(v == botaoCancelar) {
-            Intent intent;
-            if(intentExtra.equals("main")) {
-                intent = new Intent(NewRealAccount.this, MainActivity.class);
-                startActivity(intent);
-            }
+            redirecionaTela();
         }
         else if(v == botaoSalvar) {
             if(camposObrigatoriosPreenchidos()) {
@@ -91,12 +85,23 @@ public class NewRealAccount extends AppCompatActivity implements View.OnClickLis
                 Toast toast = Toast.makeText(NewRealAccount.this, "Conta salva com sucesso!",
                         Toast.LENGTH_SHORT);
                 toast.show();
+
+                redirecionaTela();
             }
             else {
                 Toast toast = Toast.makeText(NewRealAccount.this, "Por favor, preencha todos os campos obrigatórios.",
                         Toast.LENGTH_SHORT);
                 toast.show();
             }
+        }
+    }
+
+    public void redirecionaTela() {
+        Intent intent;
+
+        if(intentExtra.equals("main")) {
+            intent = new Intent(NewRealAccount.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
