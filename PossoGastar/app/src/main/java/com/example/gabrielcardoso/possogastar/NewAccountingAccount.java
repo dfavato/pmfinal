@@ -58,14 +58,11 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
         ArrayAdapter<String> adapter;
         contasCadastradas = account.queryAll();
 
-        if(contasCadastradas.isEmpty()) {
-            nomeContas.add("Não existem contas cadastradas");
-            spinner.setEnabled(false);
-        }
-        else {
-            for(int i = 0; i < contasCadastradas.size(); i++)
-                nomeContas.add(contasCadastradas.get(i).getName());
-        }
+        nomeContas.add("-");
+
+        for(int i = 0; i < contasCadastradas.size(); i++)
+            nomeContas.add(contasCadastradas.get(i).getName());
+
         // Cria um ArrayAdapter usando a lista de contas cadastradas.
         adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, nomeContas);
         // Especifica o layout a ser usado quando a lista aparece.
@@ -79,7 +76,7 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
         orcamentoTexto = orcamento.getText().toString();
 
         if(nomeTexto != null && !nomeTexto.isEmpty() && !nomeTexto.equals(" ") &&
-                orcamentoTexto != null && !orcamentoTexto.isEmpty() && Double.parseDouble(orcamentoTexto) > 0)
+                orcamentoTexto != null && !orcamentoTexto.isEmpty() && Double.parseDouble(orcamentoTexto) >= 0)
             return true;
 
         return false;
@@ -110,7 +107,7 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
                 }
             }
             else {
-                Toast toast = Toast.makeText(NewAccountingAccount.this, "Por favor, preencha todos os campos obrigatórios. Orçamento deve ser maior que zero.",
+                Toast toast = Toast.makeText(NewAccountingAccount.this, "Por favor, preencha todos os campos obrigatórios. Orçamento deve ser maior ou igual a zero.",
                         Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -126,7 +123,7 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
     }
 
     public AccountingAccount inicializaConta(String nomeConta, float orcamentoConta, String nomePai) {
-        if(!nomePai.equals("Não existem contas cadastradas")) {
+        if(!nomePai.equals("-")) {
             for(int i = 0; i < contasCadastradas.size(); i++) {
                 if(contasCadastradas.get(i).getName().equals(nomePai))
                     return new AccountingAccount(nomeConta, orcamentoConta, contasCadastradas.get(i));
