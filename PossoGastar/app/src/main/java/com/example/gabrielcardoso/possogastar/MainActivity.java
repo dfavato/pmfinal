@@ -1,12 +1,11 @@
 package com.example.gabrielcardoso.possogastar;
 
-import android.app.Instrumentation;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import com.github.clans.fab.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -38,7 +37,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -279,5 +277,4 @@ public class MainActivity extends AppCompatActivity
 -> operações de transferencia (tela etc)
 -> gerenciar contas (mostras lista das contas, poder adicionar e remover)  (comecei a fazer (GABRIEL))
 -> extrato, detalhes de contas (estou fazendo (GABRIEL))
--> funcionamento do banco de dados (estou fazendo(DANILO))
 */

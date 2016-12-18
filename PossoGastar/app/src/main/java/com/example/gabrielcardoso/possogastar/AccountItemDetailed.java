@@ -56,12 +56,14 @@ public class AccountItemDetailed extends AppCompatActivity {
 
     public void setChart(){
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(2f,50f));
-        entries.add(new Entry(3f,58f));
-        entries.add(new Entry(5f,26.5f));
-        entries.add(new Entry(8f,36f));
-        entries.add(new Entry(9f,-18f));
-        entries.add(new Entry(11f,22f));
+        try {
+            List<Float[]> saldos = BaseAccount.queryForId(this.mAccountId).saldosDiarios(Utils.today(), 7);
+            for(Float[] p: saldos) {
+                entries.add(new Entry(p[0], p[1]));
+            }
+        } catch (SQLException e) {
+            Log.e("ERRO SQL", e.getMessage());
+        }
         LineDataSet lineDataSet = new LineDataSet(entries,"Saldo");
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();

@@ -20,4 +20,8 @@ public class Utils {
         today.set(Calendar.DATE, 0);
         return today.getTime();
     }
+
+    public static Date today() {
+        return Calendar.getInstance().getTime();
+    }
 }

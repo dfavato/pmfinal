@@ -46,8 +46,11 @@ public class AccountingAccount extends BaseAccount {
     private void setBudget(float budget) {
         this.budget = budget;
     }
-    public float getBudget() {
-        //TODO get children budgets
+    public float getBudget() throws SQLException {
+        float b = this.budget;
+        for(AccountingAccount acc: this.getChildrenAccount()) {
+            b += acc.getBudget();
+        }
         return this.budget;
     }
     public List<AccountingAccount> getChildrenAccount () throws SQLException {
@@ -89,10 +92,19 @@ public class AccountingAccount extends BaseAccount {
     }
 
     //Other methods
-    private void updateBudget(float amount) {
-        this.budget += amount;
+    public void updateBudget(float amount) throws SQLException {
+        if((amount < 0 && amount <= this.getBudget()) || amount >=0) {
+            this.budget += amount;
+        } else {
+            this.budget = 0;
+        }
         if(this.getParentAccount() != null) {
             this.getParentAccount().updateBudget(amount);
+        }
+        float toSubtract;
+        List<AccountingAccount> children = this.getChildrenAccount();
+        while (amount < 0) {
+
         }
         if(amount < 0) {
             //TODO update childrenAccounts budget
@@ -110,7 +122,6 @@ public class AccountingAccount extends BaseAccount {
                 saldoAtual -= t.getValue();
             }
         }
-        //TODO somar saldo de contas filhas
         for(AccountingAccount acc: this.getChildrenAccount()) {
             saldoAtual += acc.saldo(begin, end);
         }
@@ -119,7 +130,11 @@ public class AccountingAccount extends BaseAccount {
 
     @Override
     public String toString() {
-        return this.getId() + " - " + this.getName() + " (" + this.getBudget() + ") " + (this.getParentAccount() == null ? "" : this.getParentAccount().getId()+"");
+        try {
+            return this.getId() + " - " + this.getName() + " (" + this.getBudget() + ") " + (this.getParentAccount() == null ? "" : this.getParentAccount().getId()+"");
+        } catch (SQLException e) {
+            return "Erro na consulta SQL";
+        }
     }
 
 }

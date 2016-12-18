@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.field.types.FloatObjectType;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
@@ -16,10 +17,12 @@ import com.j256.ormlite.stmt.query.OrderBy;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -166,6 +169,30 @@ public class BaseAccount {
             return null;
         else
             return this.statement().get(0).getPaymentDate();
+    }
+
+    public ArrayList<Float[]> saldosDiarios(Date d, int days) throws SQLException {
+        //Cria um array com os pontos necessários para preencher o gráfico com a evolução do saldo
+        //em cada um dos últims dias
+        ArrayList<Float[]> saldos = new ArrayList<>();
+        Float[] ponto = new Float[2];
+        Calendar date = Calendar.getInstance();
+        date.setTime(d);
+        date.add(Calendar.DAY_OF_MONTH, -days);
+        Float saldo = this.saldo(date.getTime());
+        ponto[0] = (float) -days;
+        ponto[1] = saldo;
+        saldos.add(ponto);
+        days--;
+        for(int i=days; i>=0; i--) {
+            ponto = new Float[2];
+            date.add(Calendar.DAY_OF_MONTH, 1);
+            saldo = this.saldo(date.getTime());
+            ponto[0] = (float) -i;
+            ponto[1] = saldo;
+            saldos.add(ponto);
+        }
+        return saldos;
     }
 
 }

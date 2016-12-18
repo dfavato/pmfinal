@@ -2,6 +2,8 @@ package com.example.gabrielcardoso.possogastar.model;
 
 import android.support.annotation.Nullable;
 
+import com.j256.ormlite.stmt.query.In;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +39,4 @@ public class RealAccount extends BaseAccount {
         }
         return list;
     }
-
 }
