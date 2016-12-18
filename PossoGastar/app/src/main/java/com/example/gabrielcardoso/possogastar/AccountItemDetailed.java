@@ -3,6 +3,7 @@ package com.example.gabrielcardoso.possogastar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ public class AccountItemDetailed extends AppCompatActivity {
         try {
             BaseAccount acc = BaseAccount.queryForId(this.mAccountId);
             this.mAccountTitle = acc.getName();
+            this.mLastUse = DateFormat.format("dd/MM/yy", acc.lastUsed()).toString();
+            this.mAmount = acc.saldo(Utils.today());
         } catch (SQLException e) {
             Log.e("SQL ERRO", e.getMessage());
         }
