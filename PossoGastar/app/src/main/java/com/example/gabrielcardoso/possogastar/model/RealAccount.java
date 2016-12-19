@@ -23,6 +23,8 @@ public class RealAccount extends BaseAccount {
         this.setId(base.getId());
     }
 
+    public RealAccount() {}
+
     @Nullable
     public static RealAccount queryForId(Integer id) throws SQLException {
         BaseAccount b = BaseAccount.queryForId(id);

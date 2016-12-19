@@ -44,4 +44,5 @@ public class AccountItem {
         AccountItem(String title, float amount, Date lastUse, Long id) {
             this(title, (double)amount, lastUse, Integer.parseInt(id.toString()));
         }
+        AccountItem() {}
 }
