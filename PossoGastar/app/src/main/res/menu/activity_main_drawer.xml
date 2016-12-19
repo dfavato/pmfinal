@@ -14,6 +14,11 @@
             android:id="@+id/manage_accounts"
             android:icon="@drawable/ic_settings_grey600_18dp"
             android:title="Gerenciar contas"/>
+        <item
+            android:id="@+id/manage_payment_methods"
+            android:icon="@drawable/ic_settings_grey600_18dp"
+            android:title="Métodos de Pagamento"/>
+
     </group>
 
 

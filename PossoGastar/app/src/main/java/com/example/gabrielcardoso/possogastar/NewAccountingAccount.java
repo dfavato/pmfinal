@@ -23,7 +23,7 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
     Spinner spinner;
     Button botaoSalvar, botaoCancelar;
     String intentExtra, nomeTexto, orcamentoTexto;
-    List<AccountingAccount> contasCadastradas = new ArrayList<>();;
+    List<AccountingAccount> contasCadastradas = new ArrayList<>();
 
 
     @Override

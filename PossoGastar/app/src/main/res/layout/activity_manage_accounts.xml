@@ -36,7 +36,6 @@
             android:src="@drawable/plus"/>
     </RelativeLayout>
 
-    //
     <RelativeLayout
         android:paddingTop="16dp"
         android:id="@+id/toglle_contas_reais"
