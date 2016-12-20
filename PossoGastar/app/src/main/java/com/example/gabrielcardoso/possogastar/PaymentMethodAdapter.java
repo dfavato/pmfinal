@@ -12,13 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.gabrielcardoso.possogastar.model.PaymentMethod;
+import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
+
 
 import java.util.ArrayList;
 
 public class PaymentMethodAdapter extends ArrayAdapter {
     private int mNumElements;
-    public PaymentMethodAdapter(Context context, ArrayList<PaymentMethod> methods){
+    public PaymentMethodAdapter(Context context, ArrayList<BasePaymentMethod> methods){
         super(context, 0, methods);
         this.mNumElements = methods.size();
     }
@@ -41,7 +42,7 @@ public class PaymentMethodAdapter extends ArrayAdapter {
         return listMethodView;
     }
 
-    public static void setPaymentMethodList(Integer listId, ArrayList<PaymentMethod> methods, Context context, Activity activity){
+    public static void setPaymentMethodList(Integer listId, ArrayList<BasePaymentMethod> methods, Context context, Activity activity){
         PaymentMethodAdapter paymentMethodAdapter = new PaymentMethodAdapter(context, methods);
         ListView methodList = (ListView)activity.findViewById(listId);
         methodList.setAdapter(paymentMethodAdapter);

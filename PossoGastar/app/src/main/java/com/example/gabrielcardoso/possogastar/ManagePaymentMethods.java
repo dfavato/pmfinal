@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.example.gabrielcardoso.possogastar.model.PaymentMethod;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ public class ManagePaymentMethods extends AppCompatActivity{
     }
 
     /*public void setPaymentMethodsList() {
-        ArrayList<PaymentMethod> methods = new ArrayList<>();
+        ArrayList<BasePaymentMethod> methods = new ArrayList<>();
 
         PaymentMethodAdapter.setPaymentMethodList(R.id.listaMetodosPagamento, methods, this, this);
 

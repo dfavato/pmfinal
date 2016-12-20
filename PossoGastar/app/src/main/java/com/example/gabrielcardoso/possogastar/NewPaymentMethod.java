@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.gabrielcardoso.possogastar.model.PaymentMethod;
+import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class NewPaymentMethod extends AppCompatActivity implements View.OnClickL
         }
         else if(v == botaoSalvar) {
             if(camposObrigatoriosPreenchidos()) {
-                PaymentMethod paymentMethod;
+                BasePaymentMethod paymentMethod;
 
                 int vencimentoInt = Integer.parseInt(vencimentoMetodoPagamento.getText().toString());
                 byte vencimentoByte = (byte)vencimentoInt;
@@ -129,9 +130,9 @@ public class NewPaymentMethod extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public PaymentMethod inicializaMetodoPagamento(String tipo, String nomeMetodo, float limite, byte vencimento, byte fechamento) {
+    public BasePaymentMethod inicializaMetodoPagamento(String tipo, String nomeMetodo, float limite, byte vencimento, byte fechamento) {
 
-        return new PaymentMethod(nomeMetodo, tipo, limite, vencimento, fechamento);
+        return new BasePaymentMethod(nomeMetodo, BasePaymentMethod.PaymentType.valueOf(tipo), limite, vencimento, fechamento);
     }
 
 
