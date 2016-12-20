@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity
         //Preenchendo o gráfico com dados do mês e escondendo placeholders
         //localizando view que contém o gráfico
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
+        configChart(pieChart);
         //criando array que conterá informações do gráfico
         List<PieEntry> entries = new ArrayList<>();
         float saldo;
@@ -149,8 +150,6 @@ public class MainActivity extends AppCompatActivity
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());
         }
-
-        configChart(pieChart);
         PieDataSet set = new PieDataSet(entries, "Gastos do mês");
         set.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(set);

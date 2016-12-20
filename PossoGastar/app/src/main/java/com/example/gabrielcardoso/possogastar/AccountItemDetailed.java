@@ -46,7 +46,11 @@ public class AccountItemDetailed extends AppCompatActivity {
         try {
             BaseAccount acc = BaseAccount.queryForId(this.mAccountId);
             this.mAccountTitle = acc.getName();
-            this.mLastUse = DateFormat.format("dd/MM/yy", acc.lastUsed()).toString();
+            if(acc.lastUsed()==null){
+                this.mLastUse = "Nunca";
+            }else {
+                this.mLastUse  = DateFormat.format("dd/MM/yy", acc.lastUsed()).toString();
+            }
             this.mAmount = acc.saldo(Utils.today());
         } catch (SQLException e) {
             Log.e("SQL ERRO", e.getMessage());

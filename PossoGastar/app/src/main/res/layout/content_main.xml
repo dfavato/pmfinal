@@ -18,11 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Resumo mês atual" />
+
     //A seguinte view é o gráfico de pizza que contém o resumo dos gastos do mês
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart"
         android:layout_width="match_parent"
         android:layout_height="250dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
