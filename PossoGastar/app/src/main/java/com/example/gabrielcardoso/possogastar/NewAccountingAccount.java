@@ -19,11 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewAccountingAccount extends AppCompatActivity implements View.OnClickListener{
-    EditText nomeConta, orcamento;
-    Spinner spinner;
-    Button botaoSalvar, botaoCancelar;
-    String intentExtra, nomeTexto, orcamentoTexto;
-    List<AccountingAccount> contasCadastradas = new ArrayList<>();
+    private EditText nomeConta, orcamento;
+    private Spinner spinner;
+    private Button botaoSalvar, botaoCancelar;
+    private String intentExtra, nomeTexto, orcamentoTexto;
+    private List<AccountingAccount> contasCadastradas = new ArrayList<>();
 
 
     @Override
@@ -107,7 +107,7 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
                 }
             }
             else {
-                Toast toast = Toast.makeText(NewAccountingAccount.this, "Por favor, preencha todos os campos obrigatórios. Orçamento deve ser maior ou igual a zero.",
+                Toast toast = Toast.makeText(NewAccountingAccount.this, "Por favor, preencha todos os campos obrigatórios",
                         Toast.LENGTH_SHORT);
                 toast.show();
             }

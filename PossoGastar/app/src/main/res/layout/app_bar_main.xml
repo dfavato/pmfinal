@@ -68,7 +68,7 @@
             android:src="@drawable/transfer"
             fab:menu_colorNormal="#ffffff"
             fab:menu_colorPressed="#f2f2f2"
-            fab:fab_label="Nova Transação"
+            fab:fab_label="Nova Transferência"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton

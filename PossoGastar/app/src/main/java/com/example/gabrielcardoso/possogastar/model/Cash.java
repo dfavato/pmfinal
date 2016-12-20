@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Cash extends BasePaymentMethod {
 
-    Cash() {
+    public Cash() {
         this.paymentType = PaymentType.CASH;
     }
     public Cash(String name) {

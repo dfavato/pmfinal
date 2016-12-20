@@ -22,8 +22,7 @@ import java.util.List;
 
 
 public class Card extends BasePaymentMethod {
-    Card() {
-    }
+    public Card() {this.paymentType = PaymentType.CARD;}
     public Card(String name, Float limit, byte dueDate, byte closeDate) {
         super(name);
         this.paymentType = PaymentType.CARD;

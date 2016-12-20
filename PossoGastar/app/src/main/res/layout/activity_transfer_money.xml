@@ -13,46 +13,60 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:text="De:"/>
     <Spinner
         android:id="@+id/spinner_contas_reais"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></Spinner>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="16dp"
+        android:layout_marginTop="16pt"
         android:text="Para:"/>
     <Spinner
         android:id="@+id/spinner_contas_contabeis"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></Spinner>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Valor:"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_valor_transferencia"
+        android:textSize="16dp"
+        android:layout_marginTop="16pt"
+        android:text="Método de Pagamento:"/>
+    <Spinner
+        android:id="@+id/spinner_metodo_pagamento"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-        <EditText
-            style="@style/edit_text"
-            android:id="@+id/edit_valor_transferencia"
-            android:textSize="9pt"
-            android:layout_marginLeft="16dp"
-            android:hint="Valor"
-            android:inputType="numberDecimal"
-            android:imeOptions="actionDone" />
-    </android.support.design.widget.TextInputLayout>
+        android:textSize="16dp"
+        android:layout_marginTop="16pt"
+        android:text="Valor:"/>
+
+    <EditText
+        style="@style/edit_text"
+        android:id="@+id/edit_valor_transferencia"
+        android:textSize="9pt"
+        android:layout_marginLeft="16dp"
+        android:inputType="numberDecimal"
+        android:imeOptions="actionDone" />
 
     <Button
         android:id="@+id/finalizar_transferencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pronto"/>
+        android:layout_marginTop="16pt"
+        android:text="Salvar"/>
+    <Button
+        android:id="@+id/cancelar_transferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"/>
 </LinearLayout>

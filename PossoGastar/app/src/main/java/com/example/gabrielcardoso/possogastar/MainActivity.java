@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FloatingActionMenu menuOpcoes;
-    FloatingActionButton fabContaReal, fabContaContabil, floatingActionButton3;
+    FloatingActionButton fabContaReal, fabContaContabil, fabTransfer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity
 
         fabContaReal = (FloatingActionButton) findViewById(R.id.floating_conta_real);
         fabContaContabil = (FloatingActionButton) findViewById(R.id.floating_conta_contabil);
+        fabTransfer = (FloatingActionButton) findViewById(R.id.floating_transferencia);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -86,14 +87,14 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intentContaContabil);
 
             }
-        });/*
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+        });
+        fabTransfer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
-                Intent linkdinIntent = getOpenLinkdinIntent(MainActivity.this);
-                startActivity(linkdinIntent);
+                Intent intentTransfer = new Intent(MainActivity.this, TransferMoney.class);
+                intentTransfer.putExtra("origem", "main");
+                startActivity(intentTransfer);
             }
-        });*/
+        });
     }
 
     @Override

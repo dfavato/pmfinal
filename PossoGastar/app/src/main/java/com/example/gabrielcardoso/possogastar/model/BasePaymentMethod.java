@@ -45,7 +45,7 @@ public class BasePaymentMethod {
     @DatabaseField(canBeNull = false)
     byte closeDate; //data de fechamento da fatura
 
-    BasePaymentMethod(){
+    public BasePaymentMethod(){
     }
     public BasePaymentMethod(String name) {
         this.setName(name);
