@@ -149,6 +149,7 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
                     moneyTransfer.save();
                     Toast toast = Toast.makeText(TransferMoney.this, "Transação salva com sucesso.",
                             Toast.LENGTH_SHORT);
+                    toast.show();
                     redirecionaTela();
                 } catch (SQLException e) {
                     Log.e("ERRO SQL", e.getMessage());
