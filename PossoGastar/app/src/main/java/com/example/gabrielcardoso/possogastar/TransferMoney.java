@@ -42,8 +42,8 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
         valorTransferencia = (EditText) findViewById(R.id.edit_valor_transferencia);
 
         try{
-            setAccountingAccountSpinner(this);
-            setRealAccountSpinner(this);
+            setDestinyAccountSpinner(this);
+            setOriginAccountSpinner(this);
             setPaymentMethodSpinner(this);
         }catch(SQLException e){
             Log.e("TransferMoney","SQL ERROR: "+e.toString());
@@ -54,16 +54,15 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void setRealAccountSpinner(Context context) throws SQLException {
-        RealAccount account = new RealAccount();
+    public void setOriginAccountSpinner(Context context) throws SQLException {
         List<String> nomeContas = new ArrayList<>();
         ArrayAdapter<String> adapter;
-        List<RealAccount>contasReaisCadastradas = account.queryAll();
+        List<?> contasCadastradas = BaseAccount.queryAll();
 
         nomeContas.add("-");
 
-        for(int i = 0; i < contasReaisCadastradas.size(); i++)
-            nomeContas.add(contasReaisCadastradas.get(i).getName());
+        for(int i = 0; i < contasCadastradas.size(); i++)
+            nomeContas.add(((BaseAccount)contasCadastradas.get(i)).getName());
 
         // Cria um ArrayAdapter usando a lista de contas cadastradas.
         adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, nomeContas);
@@ -73,16 +72,15 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
         ((Spinner)findViewById(R.id.spinner_contas_reais)).setAdapter(adapter);
     }
 
-    public void setAccountingAccountSpinner(Context context) throws SQLException {
-        AccountingAccount account = new AccountingAccount();
+    public void setDestinyAccountSpinner(Context context) throws SQLException {
         List<String> nomeContas = new ArrayList<>();
         ArrayAdapter<String> adapter;
-        List<AccountingAccount>contasContabeisCadastradas = account.queryAll();
+        List<?> contasCadastradas = BaseAccount.queryAll();
 
         nomeContas.add("-");
 
-        for(int i = 0; i < contasContabeisCadastradas.size(); i++)
-            nomeContas.add(contasContabeisCadastradas.get(i).getName());
+        for(int i = 0; i < contasCadastradas.size(); i++)
+            nomeContas.add(((BaseAccount)contasCadastradas.get(i)).getName());
 
         // Cria um ArrayAdapter usando a lista de contas cadastradas.
         adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, nomeContas);
@@ -96,15 +94,15 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
         Cash cash = new Cash();
         List<String> nomeMetodos = new ArrayList<>();
         ArrayAdapter<String> adapter;
-        List<Card> cardList = card.queryAll();
-        List<Cash> cashList = cash.queryAll();
+        List<?> methods = BasePaymentMethod.queryAll();
+        BasePaymentMethod payment;
 
         nomeMetodos.add("-");
 
-        for(int i = 0; i < cardList.size(); i++)
-            nomeMetodos.add("Cartão - " + cardList.get(i).getName());
-        for(int i = 0; i < cashList.size(); i++)
-            nomeMetodos.add("Dinheiro - " + cashList.get(i).getName());
+        for(int i = 0; i < methods.size(); i++) {
+            payment = (BasePaymentMethod) methods.get(i);
+            nomeMetodos.add(payment.getName());
+        }
 
         // Cria um ArrayAdapter usando a lista de contas cadastradas.
         adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, nomeMetodos);
@@ -115,13 +113,13 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
 
     }
 
-    /**
+
     private boolean finish_transference(){
         if(areValuesSetCorrectly()){
             return true;
         }
         return false;
-    }*/
+    }
 
     private boolean areValuesSetCorrectly(){
         String value = ((TextView)findViewById(R.id.edit_valor_transferencia)).getText().toString();
@@ -141,9 +139,20 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
         else if(v == botaoSalvar) {
             if(areValuesSetCorrectly()) {
                 BaseAccount contaOrigem, contaDestino;
-                contaOrigem = new BaseAccount(spinnerContaOrigem.getSelectedItem().toString());
-                contaDestino = new BaseAccount(spinnerContaDestino.getSelectedItem().toString());
-                //MoneyTransfer moneyTransfer = new MoneyTransfer();
+                BasePaymentMethod method;
+                try {
+                    contaOrigem = (BaseAccount)BaseAccount.queryForField("name", spinnerContaOrigem.getSelectedItem().toString()).get(0);
+                    contaDestino = (BaseAccount)BaseAccount.queryForField("name", spinnerContaDestino.getSelectedItem().toString()).get(0);
+                    method = (BasePaymentMethod)BasePaymentMethod.queryForField("name", spinnerMetodos.getSelectedItem().toString()).get(0);
+                    MoneyTransfer moneyTransfer = new MoneyTransfer(contaOrigem, contaDestino,
+                            method, Float.parseFloat(valorTransferencia.getText().toString()), Utils.today());
+                    moneyTransfer.save();
+                    Toast toast = Toast.makeText(TransferMoney.this, "Transação salva com sucesso.",
+                            Toast.LENGTH_SHORT);
+                    redirecionaTela();
+                } catch (SQLException e) {
+                    Log.e("ERRO SQL", e.getMessage());
+                }
             }
             else {
                 Toast toast = Toast.makeText(TransferMoney.this, "Por favor, preencha todos os campos obrigatórios.",

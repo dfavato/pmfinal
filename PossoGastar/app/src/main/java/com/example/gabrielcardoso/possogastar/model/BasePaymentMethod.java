@@ -84,6 +84,10 @@ public class BasePaymentMethod {
         return id;
     }
 
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
     public void save() throws SQLException {
         List<?> payments = BasePaymentMethod.queryForField("name", this.getName());
         if(payments.isEmpty()) {
