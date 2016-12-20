@@ -118,10 +118,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.manage_accounts) {
             Intent newWindow = new Intent(MainActivity.this, ManageAccounts.class);
             startActivity(newWindow);
-        } else if (id == R.id.manage_payment_methods) {
+        }
+        /* else if (id == R.id.manage_payment_methods) {
             Intent newWindow = new Intent(MainActivity.this, ManagePaymentMethods.class);
             startActivity(newWindow);
-        }
+        } */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
