@@ -27,13 +27,6 @@
             android:layout_alignParentRight="true"
             android:padding="4dp"
             android:src="@drawable/delete"/>
-        <ImageView
-            android:id="@+id/gerenciar_contas_icon_adicionar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:layout_toLeftOf="@id/gerenciar_contas_icon_lixeira"
-            android:src="@drawable/plus"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -49,19 +42,21 @@
             android:textColor="@color/colorPrimaryText"
             android:text="Contas Reais"/>
         <ImageView
-            android:id="@+id/expandir_contas_reais"
+            android:id="@+id/adicionar_conta_real"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
-        <ImageView
-            android:id="@+id/esconder_contas_reais"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
+            android:src="@drawable/plus"/>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/contas_reais_placeHolder"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nenhuma conta cadastrada"/>
     <ListView
+        android:layout_weight="1"
         android:id="@+id/lista_contas_reais"
         android:layout_width="wrap_content"
         android:paddingBottom="8dp"
@@ -85,19 +80,21 @@
             android:textColor="@color/colorPrimaryText"
             android:text="Contas Contabeis"/>
         <ImageView
-            android:id="@+id/expandir_contas_contabeis"
+            android:id="@+id/adicionar_conta_contabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
-        <ImageView
-            android:id="@+id/esconder_contas_contabeis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
+            android:src="@drawable/plus"/>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/contas_contabeis_placeHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nenhuma conta cadastrada"
+        android:visibility="gone"/>
     <ListView
+        android:layout_weight="1"
         android:id="@+id/lista_contas_contabeis"
         android:layout_width="wrap_content"
         android:paddingTop="8dp"

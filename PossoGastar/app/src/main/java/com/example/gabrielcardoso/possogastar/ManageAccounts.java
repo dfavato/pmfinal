@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.gabrielcardoso.possogastar.model.AccountingAccount;
 import com.example.gabrielcardoso.possogastar.model.RealAccount;
@@ -16,9 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 public class ManageAccounts extends AppCompatActivity {
-    /*O que fiz ate agr: criei um layout pra mostrar a lista de contas de cada tipo. A ideia é esconder e mostrar as listas quando
-    se clica nas setinhas pra baixo e pra cima.
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +21,20 @@ public class ManageAccounts extends AppCompatActivity {
         setContentView(R.layout.activity_manage_accounts);
         setRealAccountsList();
         setAccountingAccountsList();
-        setRealAccountDisplayButtons();
-        setAccountingAccountDisplayButtons();
+        findViewById(R.id.adicionar_conta_real).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newAccount = new Intent(ManageAccounts.this,NewRealAccount.class);
+                startActivity(newAccount);
+            }
+        });
+        findViewById(R.id.adicionar_conta_contabel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newAccount = new Intent(ManageAccounts.this,NewAccountingAccount.class);
+                startActivity(newAccount);
+            }
+        });
     }
 
     public void setRealAccountsList(){
@@ -50,12 +57,12 @@ public class ManageAccounts extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-        /**items.add(new AccountItem("Titulo",0.0f,new Date(),0));
-        items.add(new AccountItem("Titulo",0.0f,new Date(),0));
-        items.add(new AccountItem("Titulo",0.0f,new Date(),0));
-        items.add(new AccountItem("Titulo",0.0f,new Date(),0));*/
-        AccountItemAdapter.setAccountItemList(R.id.lista_contas_reais, items, this, this);
+        if(items.size()==0){
+            findViewById(R.id.lista_contas_reais).setVisibility(View.GONE);
+            findViewById(R.id.contas_reais_placeHolder).setVisibility(View.VISIBLE);
+        }else{
+            AccountItemAdapter.setAccountItemList(R.id.lista_contas_reais, items, this, this);
+        }
     }
 
     public void setAccountingAccountsList(){
@@ -79,20 +86,11 @@ public class ManageAccounts extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /**items.add(new AccountItem("Titulo",0.0f,new Date(),0));
-        items.add(new AccountItem("Titulo",0.0f,new Date(),0));
-        items.add(new AccountItem("Titulo",0.0f,new Date(),0));
-        items.add(new AccountItem("Titulo",0.0f,new Date(),0));*/
-        AccountItemAdapter.setAccountItemList(R.id.lista_contas_contabeis, items, this, this);
+        if(items.size()==0){
+            findViewById(R.id.lista_contas_contabeis).setVisibility(View.GONE);
+            findViewById(R.id.contas_contabeis_placeHolder).setVisibility(View.VISIBLE);
+        }else{
+            AccountItemAdapter.setAccountItemList(R.id.lista_contas_contabeis, items, this, this);
+        }
     }
-
-    public void setRealAccountDisplayButtons(){
-        //
-    }
-
-    public void setAccountingAccountDisplayButtons(){
-        //
-    }
-
-
 }
