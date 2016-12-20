@@ -103,5 +103,9 @@ public class NewRealAccount extends AppCompatActivity implements View.OnClickLis
             intent = new Intent(NewRealAccount.this, MainActivity.class);
             startActivity(intent);
         }
+        else if(intentExtra.equals("manage")) {
+            intent = new Intent(NewRealAccount.this, ManageAccounts.class);
+            startActivity(intent);
+        }
     }
 }

@@ -120,6 +120,10 @@ public class NewAccountingAccount extends AppCompatActivity implements View.OnCl
             intent = new Intent(NewAccountingAccount.this, MainActivity.class);
             startActivity(intent);
         }
+        else if(intentExtra.equals("manage")) {
+            intent = new Intent(NewAccountingAccount.this, ManageAccounts.class);
+            startActivity(intent);
+        }
     }
 
     public AccountingAccount inicializaConta(String nomeConta, float orcamentoConta, String nomePai) {
