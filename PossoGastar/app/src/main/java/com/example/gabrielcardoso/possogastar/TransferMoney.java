@@ -125,7 +125,8 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
         String value = ((TextView)findViewById(R.id.edit_valor_transferencia)).getText().toString();
         if(value!=null && !value.isEmpty() && Double.parseDouble(value)>=0 &&
                 ((Spinner)findViewById(R.id.spinner_contas_contabeis)).getSelectedItem().toString()!="-" &&
-                ((Spinner)findViewById(R.id.spinner_contas_reais)).getSelectedItem().toString()!="-"){
+                ((Spinner)findViewById(R.id.spinner_contas_reais)).getSelectedItem().toString()!="-" &&
+                ((Spinner)findViewById(R.id.spinner_metodo_pagamento)).getSelectedItem().toString()!="-"){
             return true;
         }
         return false;
