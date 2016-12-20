@@ -7,17 +7,15 @@
             android:icon="@drawable/ic_plus_grey600_18dp"
             android:title="Transferência"/>
         <item
-            android:id="@+id/bank_statement"
-            android:icon="@drawable/ic_chart_line_grey600_18dp"
-            android:title="Gerar extrato"/>
-        <item
             android:id="@+id/manage_accounts"
             android:icon="@drawable/ic_settings_grey600_18dp"
             android:title="Gerenciar contas"/>
+        <!--
         <item
             android:id="@+id/manage_payment_methods"
             android:icon="@drawable/ic_settings_grey600_18dp"
             android:title="Métodos de Pagamento"/>
+        -->
 
     </group>
 

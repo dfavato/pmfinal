@@ -115,9 +115,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.transfer_money) {
             Intent newWindow = new Intent(MainActivity.this, TransferMoney.class);
             startActivity(newWindow);
-        } else if (id == R.id.bank_statement) {
-            Intent newWindow = new Intent(MainActivity.this, BankStatement.class);
-            startActivity(newWindow);
         } else if (id == R.id.manage_accounts) {
             Intent newWindow = new Intent(MainActivity.this, ManageAccounts.class);
             startActivity(newWindow);

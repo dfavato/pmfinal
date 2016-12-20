@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ManageAccounts" />
-        <activity android:name=".BankStatement" />
         <activity android:name=".TransferMoney" />
         <activity android:name=".AccountItemDetailed" />
         <activity android:name=".NewPaymentMethod" />
