@@ -25,6 +25,7 @@ public class ManageAccounts extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent newAccount = new Intent(ManageAccounts.this,NewRealAccount.class);
+                newAccount.putExtra("origem", "manage");
                 startActivity(newAccount);
             }
         });
@@ -32,6 +33,7 @@ public class ManageAccounts extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent newAccount = new Intent(ManageAccounts.this,NewAccountingAccount.class);
+                newAccount.putExtra("origem", "manage");
                 startActivity(newAccount);
             }
         });
