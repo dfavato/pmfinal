@@ -21,7 +21,7 @@ import java.util.List;
 
 @DatabaseTable
 public class BasePaymentMethod {
-    enum PaymentType {
+    public enum PaymentType {
         CARD,
         CASH
     }
@@ -53,6 +53,14 @@ public class BasePaymentMethod {
         this.closeDate = 0;
         this.dueDate = 0;
     }
+    public BasePaymentMethod(String name, PaymentType paymentType, float limit, byte dueDate, byte closeDate){
+        this(name);
+        setPaymentType(paymentType);
+        this.limit = limit;
+        this.dueDate = dueDate;
+        this.closeDate = closeDate;
+    }
+
 
     public static void setDao(DataBaseHelper db) throws SQLException {
         if(dao == null) {
@@ -65,6 +73,9 @@ public class BasePaymentMethod {
     }
     void setName(String name) {
         this.name = name;
+    }
+    private void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
     public String getName() {
         return this.name;
