@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 
+import com.example.gabrielcardoso.possogastar.model.BasePaymentMethod;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ManagePaymentMethods extends AppCompatActivity{
 
@@ -17,7 +22,7 @@ public class ManagePaymentMethods extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_methods);
-        //setPaymentMethodsList();
+        setPaymentMethodsList();
 
         botaoAddMetodo = (FloatingActionButton) findViewById(R.id.addMetodoPagamento);
         botaoAddMetodo.setOnClickListener(new View.OnClickListener() {
@@ -29,12 +34,14 @@ public class ManagePaymentMethods extends AppCompatActivity{
         });
     }
 
-    /*public void setPaymentMethodsList() {
-        ArrayList<BasePaymentMethod> methods = new ArrayList<>();
-
-        PaymentMethodAdapter.setPaymentMethodList(R.id.listaMetodosPagamento, methods, this, this);
-
-    }*/
+    public void setPaymentMethodsList() {
+        try {
+            ArrayList<BasePaymentMethod> methods = (ArrayList<BasePaymentMethod>)BasePaymentMethod.queryAll();
+            PaymentMethodAdapter.setPaymentMethodList(R.id.listaMetodosPagamento, methods, this, this);
+        } catch (SQLException e) {
+            Log.d("SQL ERRO", e.getMessage());
+        }
+    }
 
 
 }
