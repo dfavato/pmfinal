@@ -43,9 +43,9 @@ public class PaymentMethodAdapter extends ArrayAdapter {
     }
 
     public static void setPaymentMethodList(Integer listId, ArrayList<BasePaymentMethod> methods, Context context, Activity activity){
-        PaymentMethodAdapter paymentMethodAdapter = new PaymentMethodAdapter(context, methods);
-        ListView methodList = (ListView)activity.findViewById(listId);
-        methodList.setAdapter(paymentMethodAdapter);
+//        PaymentMethodAdapter paymentMethodAdapter = new PaymentMethodAdapter(context, methods);
+//        ListView methodList = (ListView)activity.findViewById(listId);
+//        methodList.setAdapter(paymentMethodAdapter);
 
     }
 }
