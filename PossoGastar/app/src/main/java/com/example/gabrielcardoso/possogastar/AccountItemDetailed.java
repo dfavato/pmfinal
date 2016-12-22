@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,6 +60,15 @@ public class AccountItemDetailed extends AppCompatActivity {
         setChart();
         displayAccountInfo();
         displayLastTransitions();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //encerra esta atividade quando aperta voltar
+        if ((keyCode == KeyEvent.KEYCODE_BACK)){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void setChart(){

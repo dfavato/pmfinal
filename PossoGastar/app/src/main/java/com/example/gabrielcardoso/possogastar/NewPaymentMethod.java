@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,6 +55,16 @@ public class NewPaymentMethod extends AppCompatActivity implements View.OnClickL
         botaoCancelar.setOnClickListener(this);
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //encerra esta atividade quando aperta voltar
+        if ((keyCode == KeyEvent.KEYCODE_BACK)){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     public void preencheSpinnerTipo(Context context) throws SQLException {
 
         List<String> nomeTipos = new ArrayList<>();

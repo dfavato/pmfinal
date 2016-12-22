@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,6 +49,16 @@ public class NewRealAccount extends AppCompatActivity implements View.OnClickLis
 
         botaoCancelar.setOnClickListener(this);
         botaoSalvar.setOnClickListener(this);
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //encerra esta atividade quando aperta voltar
+        if ((keyCode == KeyEvent.KEYCODE_BACK)){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void preencheSpinner(Context context) {

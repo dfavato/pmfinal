@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 
@@ -32,6 +33,15 @@ public class ManagePaymentMethods extends AppCompatActivity{
                 ManagePaymentMethods.this.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //encerra esta atividade quando aperta voltar
+        if ((keyCode == KeyEvent.KEYCODE_BACK)){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void setPaymentMethodsList() {

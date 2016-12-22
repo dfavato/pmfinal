@@ -3,6 +3,7 @@ package com.example.gabrielcardoso.possogastar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.example.gabrielcardoso.possogastar.model.AccountingAccount;
@@ -37,6 +38,24 @@ public class ManageAccounts extends AppCompatActivity {
                 startActivity(newAccount);
             }
         });
+
+    }
+
+    @Override
+    protected void onResume(){
+        //recarrega a tela quando volta pra essa atividade
+        super.onResume();
+        setAccountingAccountsList();
+        setRealAccountsList();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //encerra esta atividade quando aperta voltar
+        if ((keyCode == KeyEvent.KEYCODE_BACK)){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void setRealAccountsList(){
@@ -63,6 +82,8 @@ public class ManageAccounts extends AppCompatActivity {
             findViewById(R.id.lista_contas_reais).setVisibility(View.GONE);
             findViewById(R.id.contas_reais_placeHolder).setVisibility(View.VISIBLE);
         }else{
+            findViewById(R.id.lista_contas_reais).setVisibility(View.VISIBLE);
+            findViewById(R.id.contas_reais_placeHolder).setVisibility(View.GONE);
             AccountItemAdapter.setAccountItemList(R.id.lista_contas_reais, items, this, this);
         }
     }
@@ -92,6 +113,8 @@ public class ManageAccounts extends AppCompatActivity {
             findViewById(R.id.lista_contas_contabeis).setVisibility(View.GONE);
             findViewById(R.id.contas_contabeis_placeHolder).setVisibility(View.VISIBLE);
         }else{
+            findViewById(R.id.lista_contas_contabeis).setVisibility(View.VISIBLE);
+            findViewById(R.id.contas_contabeis_placeHolder).setVisibility(View.GONE);
             AccountItemAdapter.setAccountItemList(R.id.lista_contas_contabeis, items, this, this);
         }
     }

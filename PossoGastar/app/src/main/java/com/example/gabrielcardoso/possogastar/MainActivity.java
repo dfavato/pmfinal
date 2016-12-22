@@ -1,9 +1,7 @@
 package com.example.gabrielcardoso.possogastar;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import com.github.clans.fab.FloatingActionButton;
 import android.util.Log;
@@ -14,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -98,6 +95,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume(){
+        //recarrega a tela quando volta pra essa atividade
+        super.onResume();
+        setChart();
+        setAccountList();
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -123,7 +128,6 @@ public class MainActivity extends AppCompatActivity
             Intent newWindow = new Intent(MainActivity.this, ManagePaymentMethods.class);
             startActivity(newWindow);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -131,7 +135,6 @@ public class MainActivity extends AppCompatActivity
 
     //
     public void setChart(){
-        //Preenchendo o gráfico com dados do mês e escondendo placeholders
         //localizando view que contém o gráfico
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         configChart(pieChart);
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity
         List<PieEntry> entries = new ArrayList<>();
         float saldo;
         try {
+            //pesquisando dados no banco de dados
             List<AccountingAccount> accounts = AccountingAccount.queryAllParent();
             for(AccountingAccount a: accounts) {
                 saldo = a.saldo(Utils.getFirstDayOfCurrentMonth(), Utils.getLastDayOfCurrentMonth());
@@ -149,11 +153,19 @@ public class MainActivity extends AppCompatActivity
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());
         }
-        PieDataSet set = new PieDataSet(entries, "Gastos do mês");
-        set.setColors(ColorTemplate.MATERIAL_COLORS);
-        PieData data = new PieData(set);
-        pieChart.setData(data);
-        pieChart.invalidate(); // refresh
+        if(entries.size()==0){
+            //se n existem dados, esconde o grafico e mostra o placeholder (q esta escondido por default)
+            findViewById(R.id.pie_chart).setVisibility(View.GONE);
+            findViewById(R.id.chart_placeholder).setVisibility(View.VISIBLE);
+        }else {
+            findViewById(R.id.pie_chart).setVisibility(View.VISIBLE);
+            findViewById(R.id.chart_placeholder).setVisibility(View.GONE);
+            PieDataSet set = new PieDataSet(entries, "Gastos do mês");
+            set.setColors(ColorTemplate.MATERIAL_COLORS);
+            PieData data = new PieData(set);
+            pieChart.setData(data);
+            pieChart.invalidate(); // recarrega os dados do grafico
+        }
     }
     //
     public void configChart(PieChart piechart){
@@ -166,10 +178,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setAccountList(){
-        //array que contem os dados das contasr
+        //array que contem os dados das contas
         final ArrayList<AccountItem> accounts = new ArrayList<>();
         Date hoje = Calendar.getInstance().getTime();
         try {
+            //pesquisa no banco de dados as contas reais
             List<RealAccount> realAccounts = RealAccount.queryAll();
             for(RealAccount r: realAccounts) {
                 accounts.add(new AccountItem(r.getName(), r.saldo(hoje), r.lastUsed(), r.getId()));
@@ -177,60 +190,29 @@ public class MainActivity extends AppCompatActivity
         } catch (SQLException e) {
             Log.e("ERRO SQL", e.getMessage());
         }
-        //criando uma conta a mais que serve para scroolar o ultimo elemento, que pode vir a ficar
-        //escondido sobre o botao flutuando
-        accounts.add(new AccountItem("",00.0,new Date(),-1,View.INVISIBLE));
-        //adaptados do array de contas para a ListView
-        AccountItemAdapter accountAdapter = new AccountItemAdapter(this,accounts);
-        ListView accountList = (ListView)findViewById(R.id.account_list);
-        accountList.setAdapter(accountAdapter);
-        accountList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent accountItemDetailed = new Intent(getApplicationContext(), AccountItemDetailed.class);
-                accountItemDetailed.putExtra(AccountItemDetailed.ACCOUNT_ID, String.valueOf(accounts.get(position).getmId()));
-                startActivity(accountItemDetailed);
-            }
-        });
-
-    }
-
-    public static Intent getOpenFacebookIntent(Context context) {
-
-        try {
-            context.getPackageManager()
-                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("fb://page/376227335860239")); //Trys to make intent with FB's URI
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.facebook.com/karthikofficialpage")); //catches and opens a url to the desired page
+        if(accounts.size()==0){
+            //se n existem constas cadastradas, mostra o placeholder (q esta escondido por default) e esconde a lista
+            findViewById(R.id.account_list).setVisibility(View.GONE);
+            findViewById(R.id.account_list_placeholder).setVisibility(View.VISIBLE);
         }
-    }
-
-    public static Intent getOpenTwitterIntent(Context context) {
-
-        try {
-            context.getPackageManager()
-                    .getPackageInfo("com.twitter.android", 0); //Checks if Twitter is even installed.
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/drkarthiik")); //Trys to make intent with Twitter's's URI
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/drkarthiik")); //catches and opens a url to the desired page
-        }
-    }
-
-    public static Intent getOpenLinkdinIntent(Context context) {
-
-        try {
-            context.getPackageManager()
-                    .getPackageInfo("com.linkedin.android", 0); //Checks if Linkdin is even installed.
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.linkedin.com/in/karthikm128")); //Trys to make intent with Linkdin's URI
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.linkedin.com/in/karthikm128")); //catches and opens a url to the desired page
+        else {
+            findViewById(R.id.account_list).setVisibility(View.VISIBLE);
+            findViewById(R.id.account_list_placeholder).setVisibility(View.GONE);
+            //criando uma conta a mais que serve para scroolar o ultimo elemento, que pode vir a ficar
+            //escondido sobre o botao flutuando
+            accounts.add(new AccountItem("", 00.0, new Date(), -1, View.INVISIBLE));
+            //adaptados do array de contas para a ListView
+            AccountItemAdapter accountAdapter = new AccountItemAdapter(this, accounts);
+            ListView accountList = (ListView) findViewById(R.id.account_list);
+            accountList.setAdapter(accountAdapter);
+            accountList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent accountItemDetailed = new Intent(getApplicationContext(), AccountItemDetailed.class);
+                    accountItemDetailed.putExtra(AccountItemDetailed.ACCOUNT_ID, String.valueOf(accounts.get(position).getmId()));
+                    startActivity(accountItemDetailed);
+                }
+            });
         }
     }
 

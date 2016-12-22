@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -52,6 +53,15 @@ public class TransferMoney extends AppCompatActivity implements View.OnClickList
         botaoSalvar.setOnClickListener(this);
         botaoCancelar.setOnClickListener(this);
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        //encerra esta atividade quando aperta voltar
+        if ((keyCode == KeyEvent.KEYCODE_BACK)){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void setOriginAccountSpinner(Context context) throws SQLException {
